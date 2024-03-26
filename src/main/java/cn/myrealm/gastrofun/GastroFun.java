@@ -18,6 +18,9 @@ import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -85,37 +88,8 @@ public final class GastroFun extends JavaPlugin {
         new TriggerListener(this).registerBukkitListener();
     }
 
-    static final List<String> FILES = Arrays.asList(
-            "foods/meat_skewer.yml",
-            "placeable_foods/chocolate_pie.yml",
-            "languages/en_US.yml",
-            "pack/assets/gastrofun/models/block/skillet.json",
-            "pack/assets/gastrofun/models/block/mixing_bowl.json",
-            "pack/assets/gastrofun/models/block/mixing_spoon.json",
-            "pack/assets/gastrofun/models/block/grill.json",
-            "pack/assets/gastrofun/textures/block/skillet.png",
-            "pack/assets/gastrofun/textures/block/mixing_bowl.png",
-            "pack/assets/gastrofun/textures/block/mixing_spoon.png",
-            "pack/assets/gastrofun/textures/block/handle-1.png",
-            "pack/assets/gastrofun/textures/block/handle-2.png",
-            "pack/assets/gastrofun/textures/block/a1.png",
-            "pack/assets/gastrofun/textures/block/a2.png",
-            "pack/assets/gastrofun/textures/block/a3.png",
-            "pack/assets/minecraft/font/default.json",
-            "pack/assets/minecraft/models/item/red_dye.json",
-            "pack/pack.png",
-            "pack/pack.mcmeta",
-            "textures/foods/meat_skewer.png",
-            "textures/placeable_foods/models/chocolate_pie/chocolate_pie_0.json",
-            "textures/placeable_foods/models/chocolate_pie/chocolate_pie_1.json",
-            "textures/placeable_foods/models/chocolate_pie/chocolate_pie_2.json",
-            "textures/placeable_foods/models/chocolate_pie/chocolate_pie_3.json",
-            "textures/placeable_foods/textures/chocolate_pie/choco_pie.png",
-            "textures/placeable_foods/chocolate_pie.png",
-            "config.yml");
-
     public void outputDefaultFiles() {
-        FILES.forEach(file -> {
+        getResourceList().forEach(file -> {
             try {
                 if (!Files.exists(Paths.get(getDataFolder().getPath() + "/" + file))) {
                     saveResource(file, false);
@@ -125,6 +99,24 @@ public final class GastroFun extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage("§x§9§8§F§B§9§8[GastroFun] §fCan not output default config file: " + names[names.length - 1]);
             }
         });
+    }
+
+    private List<String> getResourceList() {
+        List<String> lines = new ArrayList<>();
+        Reader reader = getTextResource("default_files");
+
+        if (reader != null) {
+            try (BufferedReader bufferedReader = new BufferedReader(reader)) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    lines.add(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return lines;
     }
 
     public void reloadPlugin() {
