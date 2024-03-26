@@ -2,6 +2,8 @@ package cn.myrealm.gastrofun.utils;
 
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Levelled;
 
 import java.util.Objects;
 
@@ -38,5 +40,14 @@ public class WorldUtil {
 
     public static void changeBlock(Location location, Material type) {
         location.getBlock().setType(type);
+    }
+
+    public static void placeLightSource(Block block, int lightLevel) {
+        if (!block.getType().equals(Material.LIGHT)) {
+            changeBlock(block.getLocation(), Material.LIGHT);
+        }
+        Levelled level = (Levelled) block.getBlockData();
+        level.setLevel(lightLevel);
+        block.setBlockData(level, true);
     }
 }

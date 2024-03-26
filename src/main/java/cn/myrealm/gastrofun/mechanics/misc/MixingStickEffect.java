@@ -25,32 +25,31 @@ public class MixingStickEffect {
 
     public void display(List<Player> playerList, Location location) {
         players.addAll(playerList);
-        PacketUtil.spawnItemDisplay(playerList, location.clone().add(-0.1,0.2,-0.1), DefaultItems.MIXING_SPOON.generateItemStack(), entityId,null, null);
-        PacketUtil.rotateEntity(playerList, entityId, 0, 15);
+        PacketUtil.spawnItemDisplay(playerList, location.clone().add(-0.04,-0.2,0.25), DefaultItems.MIXING_SPOON.generateItemStack(), entityId,null, null);
+        PacketUtil.rotateEntity(playerList, entityId, 0, 105);
     }
 
     public void animate() {
         new BukkitRunnable() {
-            double angle = 0; // 开始的角度
+            double angle = 0; // 定义角度，用于计算x和z轴上的位移
+            double height = 0; // 定义高度，用于计算y轴上的位移
 
             @Override
             public void run() {
-                // 计算新的X和Z位置（Y位置不变）
-                double x = 0.025 * Math.cos(angle);
-                double z = 0.025 * Math.sin(angle);
+                double radius = 0.025; // 设定半径大小
+                double x = radius * Math.cos(angle);
+                double z = radius * Math.sin(angle);
+                double y = 0.015 * Math.sin(height); // 使用正弦函数来模拟上下运动
 
-                // 创建一个向量，表示从当前位置到新位置的位移
-                Vector displacement = new Vector(x, 0, z);
+                Vector displacement = new Vector(x, y, z);
 
-                // 使用之前定义的函数发送数据包，更新实体位置
                 PacketUtil.moveEntityWithPacket(players, entityId, displacement);
 
-                // 更新角度，准备下一次移动
-                angle += Math.PI / 20; // 每次移动增加的角度
+                angle += Math.PI / 20; // 每次迭代增加的角度，用于控制旋转速度
+                height += Math.PI / 5;
 
-                // 如果角度超过2π（即一圈），从0开始
                 if (angle >= 2 * Math.PI) {
-                    angle = 0;
+                    angle = 0; // 当完成一圈时，重置角度
                 }
             }
         }.runTaskTimer(GastroFun.plugin, 0, 1);

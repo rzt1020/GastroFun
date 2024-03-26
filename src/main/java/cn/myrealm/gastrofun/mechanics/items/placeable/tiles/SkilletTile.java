@@ -115,6 +115,7 @@ public class SkilletTile extends BasePlaceableItemTile implements Triggerable, S
                 ingredients.add(ingredient);
                 new SkilletCookingScheduler(GastroFun.plugin, 1L, 330L, entityId, location, players.stream().toList(), ingredients)
                         .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
+                        .with(new LightUpEffectScheduler(GastroFun.plugin, 1L, 330L, 30, location), 0L)
                         .play(0L)
                         .complete(this)
                         .then(new SkilletCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, location, players.stream().toList(), ingredients))

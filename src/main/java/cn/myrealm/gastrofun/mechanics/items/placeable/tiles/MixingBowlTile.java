@@ -9,6 +9,7 @@ import cn.myrealm.gastrofun.mechanics.misc.MixingStickEffect;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import cn.myrealm.gastrofun.utils.PacketUtil;
+import cn.myrealm.gastrofun.utils.WorldUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -57,18 +58,24 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
     }
 
     @Override
+    public void place(Location location, Quaternionf rotation, int state, ItemStack itemStack) {
+        super.place(location, rotation, state, itemStack);
+        WorldUtil.changeBlock(location, Material.BARRIER);
+    }
+
+    @Override
+    public void remove(Location location) {
+        super.remove(location);
+        WorldUtil.changeBlock(location, Material.AIR);
+    }
+
+    @Override
     public void display(Location location, Quaternionf rotation, int state) {
         super.display(location, rotation, state);
-        sendBlockPacket(location);
         this.location = location;
         this.rotation = rotation;
     }
 
-    private void sendBlockPacket(Location location) {
-        if (!players.isEmpty()) {
-            PacketUtil.changeBlock(players.stream().toList(), location, Material.BARRIER);
-        }
-    }
 
     @Override
     public void sendEntityPacket(Location location, Quaternionf rotation, int state) {
@@ -84,14 +91,8 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
     @Override
     public void hide(Location location) {
         super.hide(location);
-        removeBlockPacket(location);
     }
 
-    private void removeBlockPacket(Location location) {
-        if (!players.isEmpty()) {
-            PacketUtil.changeBlock(players.stream().toList(), location, Material.AIR);
-        }
-    }
 
     @Override
     public void removeEntityPacket(Location location) {
