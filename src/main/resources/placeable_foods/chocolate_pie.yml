@@ -1,0 +1,10 @@
+display_name: "Chocolate Pie"
+description: "Silky temptation, richly textured."
+container: null
+max_share: 4
+texture: chocolate_pie
+recipes:
+  1:
+    ingredients: [COCOA_BEANS, SUGAR, EGG]
+    food_point: 2
+    saturation: 1.2

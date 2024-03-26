@@ -1,0 +1,306 @@
+display_name: "Meat Skewer"
+description: "A global delicacy on a stick."
+container: STICK  # You will need this container to obtain your food, and it will also obtain it again after consuming this food
+stackable: true
+texture: meat_skewer
+recipes:
+  1:
+    ingredients: [PORKCHOP]
+    food_point: 8
+    saturation: 12.8
+  2:
+    ingredients: [PORKCHOP, PORKCHOP]
+    food_point: 10
+    saturation: 16.0
+  3:
+    ingredients: [PORKCHOP, PORKCHOP, PORKCHOP]
+    food_point: 12
+    saturation: 19.2
+  4:
+    ingredients: [BEEF]
+    food_point: 8
+    saturation: 12.8
+  5:
+    ingredients: [BEEF, BEEF]
+    food_point: 10
+    saturation: 16.0
+  6:
+    ingredients: [BEEF, BEEF, BEEF]
+    food_point: 12
+    saturation: 19.2
+  7:
+    ingredients: [MUTTON]
+    food_point: 6
+    saturation: 9.6
+  8:
+    ingredients: [MUTTON, MUTTON]
+    food_point: 8
+    saturation: 12.8
+  9:
+    ingredients: [MUTTON, MUTTON, MUTTON]
+    food_point: 10
+    saturation: 16.0
+  10:
+    ingredients: [RABBIT]
+    food_point: 5
+    saturation: 6.0
+  11:
+    ingredients: [RABBIT, RABBIT]
+    food_point: 7
+    saturation: 8.0
+  12:
+    ingredients: [RABBIT, RABBIT, RABBIT]
+    food_point: 9
+    saturation: 10.0
+  13:
+    ingredients: [CHICKEN]
+    food_point: 6
+    saturation: 7.2
+  14:
+    ingredients: [CHICKEN, CHICKEN]
+    food_point: 8
+    saturation: 9.6
+  15:
+    ingredients: [CHICKEN, CHICKEN, CHICKEN]
+    food_point: 10
+    saturation: 12.0
+  16:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [PORKCHOP, BEEF]
+    food_point: 12
+    saturation: 19.2
+  17:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [PORKCHOP, MUTTON]
+    food_point: 12
+    saturation: 14.8
+  18:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [PORKCHOP, RABBIT]
+    food_point: 12
+    saturation: 14.8
+  19:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [PORKCHOP, CHICKEN]
+    food_point: 12
+    saturation: 14.8
+  20:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [BEEF, MUTTON ]
+    food_point: 12
+    saturation: 14.8
+  21:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [BEEF, RABBIT ]
+    food_point: 12
+    saturation: 14.8
+  22:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [BEEF, CHICKEN ]
+    food_point: 12
+    saturation: 14.8
+  23:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON, RABBIT ]
+    food_point: 12
+    saturation: 14.8
+  24:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON, CHICKEN ]
+    food_point: 12
+    saturation: 14.8
+  25:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [RABBIT, CHICKEN ]
+    food_point: 12
+    saturation: 14.8
+  26:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, PORKCHOP, BEEF]
+    food_point: 14
+    saturation: 21.0
+  27:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, BEEF, BEEF ]
+    food_point: 14
+    saturation: 21.0
+  28:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, BEEF, MUTTON ]
+    food_point: 14
+    saturation: 21.0
+  29:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, BEEF, RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  30:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, BEEF,  CHICKEN]
+    food_point: 14
+    saturation: 21.0
+  31:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, PORKCHOP, MUTTON ]
+    food_point: 14
+    saturation: 21.0
+  32:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, MUTTON, MUTTON]
+    food_point: 14
+    saturation: 21.0
+  33:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, MUTTON, RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  34:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, MUTTON, CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  35:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, PORKCHOP, RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  36:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, RABBIT, RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  37:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, RABBIT, CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  38:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP,PORKCHOP,CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  39:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ PORKCHOP, CHICKEN, CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  40:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF,BEEF, MUTTON ]
+    food_point: 14
+    saturation: 21.0
+  41:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF, MUTTON , MUTTON ]
+    food_point: 14
+    saturation: 21.0
+  42:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF, MUTTON , RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  43:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF, MUTTON , CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  44:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF,BEEF, RABBIT ]
+    food_point: 14
+    saturation: 21.0
+  45:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF,RABBIT, RABBIT]
+    food_point: 14
+    saturation: 21.0
+  46:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF,RABBIT, CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  47:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF,BEEF, CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  48:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ BEEF, CHICKEN , CHICKEN ]
+    food_point: 14
+    saturation: 21.0
+  49:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON, MUTTON, RABBIT]
+    food_point: 13
+    saturation: 17.0
+  50:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON, RABBIT , RABBIT ]
+    food_point: 13
+    saturation: 17.0
+  51:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON, RABBIT , CHICKEN]
+    food_point: 13
+    saturation: 17.0
+  52:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON,MUTTON, CHICKEN ]
+    food_point: 13
+    saturation: 17.0
+  53:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ MUTTON,CHICKEN ,CHICKEN ]
+    food_point: 13
+    saturation: 17.0
+  54:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ RABBIT,RABBIT, CHICKEN ]
+    food_point: 13
+    saturation: 17.0
+  55:
+    display_name: "Copious Meat Skewer"
+    description: "A creative blend of meats."
+    ingredients: [ RABBIT, CHICKEN , CHICKEN ]
+    food_point: 13
+    saturation: 17.0

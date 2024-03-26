@@ -1,0 +1,32 @@
+name: GastroFun
+version: '${project.version}'
+main: cn.myrealm.gastrofun.GastroFun
+api-version: '1.20'
+depend:
+  - ProtocolLib
+commands:
+  gastrofun:
+    description: GastroFun Main Command
+    usage: /gastrofun
+    aliases: [gf]
+
+permissions:
+  gastrofun.*:
+    default: op
+    children:
+      gastrofun.command.*: true
+      gastrofun.play.*: true
+  gastrofun.command.*:
+    default: op
+    children:
+      gastrofun.command.help: true
+      gastrofun.command.give: true
+      gastrofun.command.reload: true
+  gastrofun.command.help:
+    default: op
+  gastrofun.command.reload:
+    default: op
+  gastrofun.command.give:
+    default: op
+  gastrofun.play.*:
+    default: true

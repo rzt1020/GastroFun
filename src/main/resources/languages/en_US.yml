@@ -1,0 +1,20 @@
+prefix: "<#98FB98>[GastroFun]&f "
+game:
+  description: "&7Description:"
+  food-point: "Food Point:"
+info:
+  enable-message: "Plugin is enabled! author: rzt1020"
+  reload-success: "Plugin reloaded successfully!"
+  texture-pack-created: "Successfully created resource pack at plugins\\GastroFun\\pack!"
+error:
+  incorrect-command: "Wrong command usage, if you need help, use /gastro help"
+  executing-command: "There is something wrong when using this command: {error}"
+  missing-permission: "You don't have permission to use this command!"
+  failed-to-create-texture-pack: "Failed to create resource pack!"
+  player-not-online: "Player {player} is not online now."
+command:
+  help: "View list of plugin help."
+  reload: "Reload the plugin."
+  give: "Give player items that registered by GastroFun."
+  help-head: "<#98FB98>&lGastroFun &7Made by @rzt1020"
+  help-detail: "&f{command-usage} &7- {command-description}"
