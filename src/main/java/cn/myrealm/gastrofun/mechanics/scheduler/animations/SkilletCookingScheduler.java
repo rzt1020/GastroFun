@@ -2,7 +2,6 @@ package cn.myrealm.gastrofun.mechanics.scheduler.animations;
 
 
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
-import cn.myrealm.gastrofun.mechanics.ingredients.BaseSkilletIngredient;
 import cn.myrealm.gastrofun.mechanics.scheduler.BaseScheduler;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import org.bukkit.Location;

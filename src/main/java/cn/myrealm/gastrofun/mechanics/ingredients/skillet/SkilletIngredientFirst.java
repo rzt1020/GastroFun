@@ -1,4 +1,4 @@
-package cn.myrealm.gastrofun.mechanics.ingredients;
+package cn.myrealm.gastrofun.mechanics.ingredients.skillet;
 
 
 import org.bukkit.util.Vector;

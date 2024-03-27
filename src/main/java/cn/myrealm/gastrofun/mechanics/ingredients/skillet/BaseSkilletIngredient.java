@@ -1,6 +1,7 @@
-package cn.myrealm.gastrofun.mechanics.ingredients;
+package cn.myrealm.gastrofun.mechanics.ingredients.skillet;
 
 import cn.myrealm.gastrofun.GastroFun;
+import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import cn.myrealm.gastrofun.utils.WorldUtil;
 import org.bukkit.entity.Player;

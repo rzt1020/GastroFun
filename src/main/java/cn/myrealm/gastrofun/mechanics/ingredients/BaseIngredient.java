@@ -41,4 +41,9 @@ public abstract class BaseIngredient {
     public void move(List<Player> players, Vector displacement) {
         PacketUtil.moveEntityWithPacket(players, entityId, displacement);
     }
+
+
+    public void tilt(List<Player> players, float roll, float pitch) {
+        PacketUtil.tiltEntity(players, entityId, roll, pitch);
+    }
 }
