@@ -4,7 +4,7 @@ package cn.myrealm.gastrofun.managers.mechanics;
 import cn.myrealm.gastrofun.managers.BaseManager;
 import cn.myrealm.gastrofun.mechanics.foods.Food;
 import cn.myrealm.gastrofun.mechanics.foods.PlaceableFood;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.FoodModel;
+import cn.myrealm.gastrofun.mechanics.items.items.FoodModel;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import com.comphenix.protocol.wrappers.Pair;
 import org.bukkit.configuration.file.YamlConfiguration;

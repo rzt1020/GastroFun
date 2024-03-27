@@ -1,7 +1,7 @@
 package cn.myrealm.gastrofun.mechanics.scheduler.processes;
 
 
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.mechanics.scheduler.BaseScheduler;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,4 +1,4 @@
-package cn.myrealm.gastrofun.mechanics.items.placeable.tiles;
+package cn.myrealm.gastrofun.mechanics.items.tiles;
 
 
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;

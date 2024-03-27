@@ -1,12 +1,12 @@
-package cn.myrealm.gastrofun.mechanics.items.placeable.items;
+package cn.myrealm.gastrofun.mechanics.items.items;
 
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
 import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
-import cn.myrealm.gastrofun.mechanics.items.placeable.tiles.BasePlaceableItemTile;
-import cn.myrealm.gastrofun.mechanics.items.placeable.tiles.GrillTile;
+import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
+import cn.myrealm.gastrofun.mechanics.items.tiles.GrillTile;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;

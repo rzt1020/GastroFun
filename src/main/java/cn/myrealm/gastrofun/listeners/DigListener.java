@@ -1,7 +1,7 @@
 package cn.myrealm.gastrofun.listeners;
 
 
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.mechanics.scheduler.processes.RemoveScheduler;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;

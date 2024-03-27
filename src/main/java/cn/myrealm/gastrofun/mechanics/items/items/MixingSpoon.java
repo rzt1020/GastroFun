@@ -1,7 +1,8 @@
-package cn.myrealm.gastrofun.mechanics.items;
+package cn.myrealm.gastrofun.mechanics.items.items;
 
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
+import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

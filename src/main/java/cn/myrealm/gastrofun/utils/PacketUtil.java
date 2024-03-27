@@ -228,26 +228,25 @@ public class PacketUtil {
                 .write(1, (byte) (pitch * 256 / 360));
         entityLookPacket.getBooleans().write(0, true);
 
-        try {
-            for (Player player : players) {
-                GastroFun.protocolManager.sendServerPacket(player, entityHeadRotationPacket);
-                GastroFun.protocolManager.sendServerPacket(player, entityLookPacket);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (Player player : players) {
+            GastroFun.protocolManager.sendServerPacket(player, entityHeadRotationPacket);
+            GastroFun.protocolManager.sendServerPacket(player, entityLookPacket);
         }
     }
 
-    public static void showFireworkExplosion(List<Player> players, Location location) {
+    public static void tiltEntity(List<Player> players, int entityId, float roll, float pitch) {
+        PacketContainer entityLookPacket = GastroFun.protocolManager.createPacket(PacketType.Play.Server.ENTITY_LOOK);
 
-        PacketContainer fireworkPacket = GastroFun.protocolManager.createPacket(PacketType.Play.Server.WORLD_PARTICLES);
-        fireworkPacket.getNewParticles().write(0, WrappedParticle.create(Particle.FIREWORKS_SPARK, null));
-        fireworkPacket.getFloat().write(0, (float) location.getX());
-        fireworkPacket.getFloat().write(1, (float) location.getY());
-        fireworkPacket.getFloat().write(2, (float) location.getZ());
+        entityLookPacket.getIntegers().write(0, entityId);
+        entityLookPacket.getBytes()
+                .write(0, (byte) (roll * 256 / 360))
+                .write(1, (byte) (pitch * 256 / 360));
+
+        entityLookPacket.getBooleans().write(0, true);
 
         for (Player player : players) {
-            GastroFun.protocolManager.sendServerPacket(player, fireworkPacket);
+            GastroFun.protocolManager.sendServerPacket(player, entityLookPacket);
         }
     }
+
 }

@@ -5,7 +5,7 @@ import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.mechanics.persistent.LocationTagType;
 import cn.myrealm.gastrofun.mechanics.persistent.QuaternionTagType;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

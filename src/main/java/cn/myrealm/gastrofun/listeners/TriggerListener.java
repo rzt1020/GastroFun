@@ -1,10 +1,9 @@
 package cn.myrealm.gastrofun.listeners;
 
 
-import cn.myrealm.gastrofun.listeners.BaseListener;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

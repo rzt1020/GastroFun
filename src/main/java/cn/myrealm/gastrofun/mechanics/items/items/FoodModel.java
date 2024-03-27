@@ -1,51 +1,40 @@
-package cn.myrealm.gastrofun.mechanics.items.placeable.items;
+package cn.myrealm.gastrofun.mechanics.items.items;
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
-import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
-import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
-import cn.myrealm.gastrofun.mechanics.items.placeable.tiles.BasePlaceableItemTile;
-import cn.myrealm.gastrofun.mechanics.items.placeable.tiles.MixingBowlTile;
-import cn.myrealm.gastrofun.utils.ItemUtil;
+import cn.myrealm.gastrofun.mechanics.foods.PlaceableFood;
+import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
+import cn.myrealm.gastrofun.mechanics.items.tiles.FoodModelTile;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
 /**
  * @author rzt1020
  */
-public class MixingBowl extends BasePlaceableItem implements DefaultItem, Triggerable {
-
-    public MixingBowl() {
+public class FoodModel extends BasePlaceableItem implements Triggerable {
+    private final String placeableFoodName;
+    private final PlaceableFood placeableFood;
+    public FoodModel(String placeableFoodName, PlaceableFood placeableFood) {
         super();
-        placeableName = "mixing_bowl";
+        placeableName = "food_model";
+        this.placeableFoodName = placeableFoodName;
+        this.placeableFood = placeableFood;
     }
 
     @Override
-    public ItemStack generate() {
-        ItemStack itemStack = ItemUtil.generateItemStack(Material.RED_DYE, DefaultItems.MIXING_BOWL.getCustomModelData(), "&6Mixing Bowl", null);
-        System.out.println(itemStack);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        assert itemMeta != null;
-        NamespacedKeys.PLACEABLE_NAME.set(itemMeta, PersistentDataType.STRING, DefaultItems.MIXING_BOWL.getName());
-        itemStack.setItemMeta(itemMeta);
-
-        return itemStack;
+    public String getPlaceableName() {
+        return placeableName + ':' + placeableFoodName;
     }
 
     @Override
     public boolean trigger(Player player, ItemStack itemStack, Location location) {
-        if (Objects.isNull(itemStack) && !player.getInventory().getItemInMainHand().getType().isAir()) {
-            return false;
-        }
         BasePlaceableItemTile tile = tiles.get(location);
         if (Objects.isNull(tile)) {
             return false;
@@ -58,12 +47,12 @@ public class MixingBowl extends BasePlaceableItem implements DefaultItem, Trigge
 
     @Override
     public BasePlaceableItemTile createTile() {
-        return new MixingBowlTile();
+        return new FoodModelTile(placeableFoodName, placeableFood);
     }
 
     @Override
     public BasePlaceableItemTile createTile(int entityId) {
-        return new MixingBowlTile(entityId);
+        return new FoodModelTile(entityId, placeableFoodName, placeableFood);
     }
 
     @Override
@@ -84,7 +73,7 @@ public class MixingBowl extends BasePlaceableItem implements DefaultItem, Trigge
 
     @Override
     public boolean removable(ItemStack itemStack) {
-        return PICKAXES.contains(itemStack.getType());
+        return true;
     }
 
     @Override

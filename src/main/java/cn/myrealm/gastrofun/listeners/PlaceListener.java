@@ -2,9 +2,8 @@ package cn.myrealm.gastrofun.listeners;
 
 import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
-import cn.myrealm.gastrofun.listeners.BaseListener;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import org.bukkit.Bukkit;

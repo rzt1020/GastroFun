@@ -1,8 +1,8 @@
-package cn.myrealm.gastrofun.mechanics.items.placeable.items;
+package cn.myrealm.gastrofun.mechanics.items.items;
 
 
 import cn.myrealm.gastrofun.mechanics.items.Placeable;
-import cn.myrealm.gastrofun.mechanics.items.placeable.tiles.BasePlaceableItemTile;
+import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

@@ -1,11 +1,12 @@
-package cn.myrealm.gastrofun.mechanics.items.placeable.tiles;
+package cn.myrealm.gastrofun.mechanics.items.tiles;
 
 
+import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
-import cn.myrealm.gastrofun.mechanics.ingredients.MixingBowlIngredient;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
-import cn.myrealm.gastrofun.mechanics.misc.MixingStickEffect;
+import cn.myrealm.gastrofun.mechanics.misc.MixingSpoon;
+import cn.myrealm.gastrofun.mechanics.scheduler.animations.BlowMixingScheduler;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import cn.myrealm.gastrofun.utils.PacketUtil;
@@ -48,12 +49,10 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
         if (Objects.nonNull(ingredient)) {
             return false;
         }
-        ingredient = new MixingBowlIngredient(entityId);
-        ingredient.setItemStack(itemStack);
-        ingredient.display(players.stream().toList(), location);
-        MixingStickEffect effect = new MixingStickEffect(entityId+2);
-        effect.display(players.stream().toList(), location);
-        effect.animate();
+        MixingSpoon mixingSpoon = new MixingSpoon(players.stream().toList(), entityId+1, location, rotation);
+        mixingSpoon.display();
+        mixingSpoon.animate();
+        new BlowMixingScheduler(GastroFun.plugin, 1, 330, mixingSpoon, entityId, location, players.stream().toList()).play(0);
         return true;
     }
 

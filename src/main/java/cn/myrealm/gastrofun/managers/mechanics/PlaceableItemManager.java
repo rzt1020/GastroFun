@@ -2,10 +2,10 @@ package cn.myrealm.gastrofun.managers.mechanics;
 
 
 import cn.myrealm.gastrofun.managers.BaseManager;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.BasePlaceableItem;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.Grill;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.MixingBowl;
-import cn.myrealm.gastrofun.mechanics.items.placeable.items.Skillet;
+import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.items.Grill;
+import cn.myrealm.gastrofun.mechanics.items.items.MixingBowl;
+import cn.myrealm.gastrofun.mechanics.items.items.Skillet;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
