@@ -2,7 +2,6 @@ package cn.myrealm.gastrofun.mechanics.ingredients.mixing;
 
 
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
-import org.bukkit.util.Vector;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 

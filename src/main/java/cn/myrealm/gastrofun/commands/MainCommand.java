@@ -1,8 +1,8 @@
 package cn.myrealm.gastrofun.commands;
 
 import cn.myrealm.gastrofun.commands.subcommands.SubCommand;
-import cn.myrealm.gastrofun.enums.systems.Messages;
 import cn.myrealm.gastrofun.enums.mechanics.Permissions;
+import cn.myrealm.gastrofun.enums.systems.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

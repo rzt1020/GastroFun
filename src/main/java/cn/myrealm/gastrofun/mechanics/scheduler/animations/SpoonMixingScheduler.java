@@ -37,5 +37,6 @@ public class SpoonMixingScheduler extends BaseScheduler {
         if (angle >= 2 * Math.PI) {
             angle = 0;
         }
+        super.run();
     }
 }

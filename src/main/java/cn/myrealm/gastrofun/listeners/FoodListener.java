@@ -2,7 +2,6 @@ package cn.myrealm.gastrofun.listeners;
 
 
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
-import cn.myrealm.gastrofun.listeners.BaseListener;
 import cn.myrealm.gastrofun.managers.mechanics.FoodManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

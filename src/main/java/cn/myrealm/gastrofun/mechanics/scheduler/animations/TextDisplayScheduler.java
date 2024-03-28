@@ -24,7 +24,7 @@ public class TextDisplayScheduler extends BaseScheduler {
         super(plugin, period, endTicks);
         this.text = text;
         this.entityId = entityId;
-        this.location = location;
+        this.location = location.clone();
         this.players = players;
         this.endTicksBackUp = endTicks;
     }

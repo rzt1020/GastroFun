@@ -1,13 +1,10 @@
 package cn.myrealm.gastrofun.enums.systems;
 
 import cn.myrealm.gastrofun.GastroFun;
-import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.List;
 
 /**
  * @author rzt1020

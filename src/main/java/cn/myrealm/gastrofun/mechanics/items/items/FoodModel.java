@@ -2,8 +2,8 @@ package cn.myrealm.gastrofun.mechanics.items.items;
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
-import cn.myrealm.gastrofun.mechanics.items.Triggerable;
 import cn.myrealm.gastrofun.mechanics.foods.PlaceableFood;
+import cn.myrealm.gastrofun.mechanics.items.Triggerable;
 import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
 import cn.myrealm.gastrofun.mechanics.items.tiles.FoodModelTile;
 import org.bukkit.Location;

@@ -1,6 +1,5 @@
 package cn.myrealm.gastrofun.listeners;
 
-import cn.myrealm.gastrofun.listeners.BaseListener;
 import cn.myrealm.gastrofun.managers.mechanics.ChunkManager;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

@@ -1,10 +1,10 @@
 package cn.myrealm.gastrofun.enums.mechanics;
 
 import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
-import cn.myrealm.gastrofun.mechanics.items.items.MixingSpoon;
-import cn.myrealm.gastrofun.mechanics.items.items.Grill;
 import cn.myrealm.gastrofun.mechanics.items.Placeable;
+import cn.myrealm.gastrofun.mechanics.items.items.Grill;
 import cn.myrealm.gastrofun.mechanics.items.items.MixingBowl;
+import cn.myrealm.gastrofun.mechanics.items.items.MixingSpoon;
 import cn.myrealm.gastrofun.mechanics.items.items.Skillet;
 import org.bukkit.inventory.ItemStack;
 

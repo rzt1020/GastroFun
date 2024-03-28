@@ -4,14 +4,12 @@ package cn.myrealm.gastrofun.mechanics.items.tiles;
 import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
 import cn.myrealm.gastrofun.managers.mechanics.FoodManager;
-import cn.myrealm.gastrofun.mechanics.ingredients.*;
+import cn.myrealm.gastrofun.mechanics.foods.Food;
+import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.mechanics.ingredients.skillet.BaseSkilletIngredient;
 import cn.myrealm.gastrofun.mechanics.ingredients.skillet.SkilletIngredientFirst;
 import cn.myrealm.gastrofun.mechanics.ingredients.skillet.SkilletIngredientSecond;
 import cn.myrealm.gastrofun.mechanics.ingredients.skillet.SkilletIngredientThird;
-import cn.myrealm.gastrofun.mechanics.items.SchedulerAble;
-import cn.myrealm.gastrofun.mechanics.items.Triggerable;
-import cn.myrealm.gastrofun.mechanics.foods.Food;
 import cn.myrealm.gastrofun.mechanics.misc.ProgressBar;
 import cn.myrealm.gastrofun.mechanics.scheduler.animations.*;
 import cn.myrealm.gastrofun.mechanics.scheduler.processes.FailureReturnScheduler;
@@ -20,28 +18,21 @@ import cn.myrealm.gastrofun.utils.ItemUtil;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import cn.myrealm.gastrofun.utils.WorldUtil;
 import com.comphenix.protocol.wrappers.Pair;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.joml.Quaternionf;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * @author rzt1020
  */
-public class SkilletTile extends BasePlaceableItemTile implements Triggerable, SchedulerAble {
+public class SkilletTile extends BaseCookwareTile {
     private final ProgressBar progressBar;
 
-    private final List<BaseIngredient> ingredients = new ArrayList<>();
-
-    private Food food;
-    private int recipeId;
-    private CompleteDisplayScheduler completeDisplayScheduler;
-    private TextDisplayScheduler withoutContainerReminder;
 
     public SkilletTile() {
         super();
@@ -111,7 +102,8 @@ public class SkilletTile extends BasePlaceableItemTile implements Triggerable, S
         return take(player, itemStack, location);
     }
 
-    private boolean add(ItemStack itemStack, Location location) {
+    @Override
+    protected boolean add(ItemStack itemStack, Location location) {
         BaseSkilletIngredient ingredient;
         switch (ingredients.size()) {
             case 0 -> {
@@ -141,50 +133,6 @@ public class SkilletTile extends BasePlaceableItemTile implements Triggerable, S
         ingredient.setItemStack(itemStack);
         ingredient.display(players.stream().toList(), location);
         return true;
-    }
-
-    private boolean take(Player player, ItemStack itemStack, Location location) {
-        ItemStack container = food.getContainer();
-        if (Objects.isNull(container)) {
-            completeDisplayScheduler.end();
-            giveFood(player);
-        } else {
-            if (container.isSimilar(itemStack)) {
-                completeDisplayScheduler.end();
-                giveFood(player);
-                return true;
-            } else {
-                completeDisplayScheduler.speedUp();
-                if (Objects.isNull(withoutContainerReminder) || withoutContainerReminder.isEnd()) {
-                    withoutContainerReminder = new TextDisplayScheduler(GastroFun.plugin, 1L, 60L, "请使用合适的容器来取得食物", entityId+6, location.clone().add(0, 0.5, 0), players.stream().toList());
-                    withoutContainerReminder.play(0);
-                } else {
-                    withoutContainerReminder.updateEndTicks();
-                }
-            }
-        }
-        return false;
-    }
-
-    private void giveFood(Player player) {
-        ItemStack itemStack = food.getFood(recipeId);
-        ingredients.clear();
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (Objects.isNull(food)) {
-                    return;
-                }
-                if (player.getInventory().getItemInMainHand().getType().isAir()) {
-                    player.getInventory().setItemInMainHand(itemStack);
-                } else {
-                    player.getInventory().addItem(food.getFood(recipeId));
-                }
-                food = null;
-            }
-        }.runTaskLater(GastroFun.plugin, 1);
-
     }
 
     @Override

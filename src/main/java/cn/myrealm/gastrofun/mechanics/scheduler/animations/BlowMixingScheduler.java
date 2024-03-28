@@ -27,7 +27,7 @@ public class BlowMixingScheduler extends BaseScheduler {
         super(plugin, period, endTicks);
         this.rotation = rotation;
         this.entityId = entityId;
-        this.location = location;
+        this.location = location.clone();
         this.players = players;
         this.ingredients = ingredients;
     }

@@ -4,10 +4,7 @@ package cn.myrealm.gastrofun.mechanics.scheduler.animations;
 import cn.myrealm.gastrofun.mechanics.items.SchedulerAble;
 import cn.myrealm.gastrofun.mechanics.scheduler.BaseScheduler;
 import cn.myrealm.gastrofun.utils.PacketUtil;
-import cn.myrealm.gastrofun.utils.WorldUtil;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +27,7 @@ public class CompleteDisplayScheduler extends BaseScheduler {
     public CompleteDisplayScheduler(JavaPlugin plugin, long period, long endTicks, int entityId, Location location, List<Player> players, SchedulerAble schedulerAble) {
         super(plugin, period, endTicks);
         this.entityId = entityId;
-        this.location = location;
+        this.location = location.clone();
         this.players = players;
         this.schedulerAble = schedulerAble;
     }

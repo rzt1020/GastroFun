@@ -2,8 +2,8 @@ package cn.myrealm.gastrofun.commands.subcommands;
 
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
-import cn.myrealm.gastrofun.enums.systems.Messages;
 import cn.myrealm.gastrofun.enums.mechanics.Permissions;
+import cn.myrealm.gastrofun.enums.systems.Messages;
 import cn.myrealm.gastrofun.managers.mechanics.FoodManager;
 import cn.myrealm.gastrofun.mechanics.foods.Food;
 import org.bukkit.Bukkit;

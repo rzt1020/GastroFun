@@ -1,8 +1,8 @@
 package cn.myrealm.gastrofun;
 
+import cn.myrealm.gastrofun.commands.MainCommand;
 import cn.myrealm.gastrofun.commands.subcommands.GiveCommand;
 import cn.myrealm.gastrofun.commands.subcommands.HelpCommand;
-import cn.myrealm.gastrofun.commands.MainCommand;
 import cn.myrealm.gastrofun.commands.subcommands.ReloadCommand;
 import cn.myrealm.gastrofun.enums.systems.Messages;
 import cn.myrealm.gastrofun.listeners.*;
@@ -24,7 +24,6 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
