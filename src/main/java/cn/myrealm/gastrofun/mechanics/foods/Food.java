@@ -8,6 +8,7 @@ import cn.myrealm.gastrofun.managers.mechanics.FoodManager;
 import cn.myrealm.gastrofun.managers.system.TextureManager;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.ItemUtil;
+import com.google.common.base.Strings;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -52,10 +53,36 @@ public class Food {
             foodManager.registerRecipe(ingredients, foodName + ":" + i);
             i ++;
         }
+        i = 1;
+        while (config.contains(ConfigKeys.MIXING.getKey() + i)) {
+            ConfigurationSection section = config.getConfigurationSection(ConfigKeys.MIXING.getKey() + i);
+            if (section == null) {
+                break;
+            }
+            List<String> ingredients = ConfigKeys.INGREDIENTS.asStringList(section);
+            try {
+                if (ingredients.isEmpty()) {
+                    throw new Exception("Ingredients is empty");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            foodManager.registerMixing(ingredients, foodName + ":" + i);
+            i ++;
+        }
     }
 
     public ItemStack getFood(int recipeId) {
         ConfigurationSection section = config.getConfigurationSection(ConfigKeys.RECIPES.getKey() + recipeId);
+        if (Objects.isNull(section)) {
+            return null;
+        }
+        ItemStack itemStack = createFoodItemStack(section);
+        packageData(itemStack, section);
+        return itemStack;
+    }
+    public ItemStack getMixing(int mixingId) {
+        ConfigurationSection section = config.getConfigurationSection(ConfigKeys.MIXING.getKey() + mixingId);
         if (Objects.isNull(section)) {
             return null;
         }
@@ -76,8 +103,10 @@ public class Food {
 
         List<String> lore = new ArrayList<>();
         lore.add("");
-        lore.add(Messages.GAME_DESCRIPTION.getMessage());
-        lore.addAll(BasicUtil.parsePrefix(BasicUtil.stringArray(description, 20), "&7"));
+        if (!Strings.isNullOrEmpty(description)) {
+            lore.add(Messages.GAME_DESCRIPTION.getMessage());
+            lore.addAll(BasicUtil.parsePrefix(BasicUtil.stringArray(description, 20), "&7"));
+        }
 
         int foodPoint = ConfigKeys.FOOD_POINT.asInt(section);
         if (foodPoint > 0) {
@@ -118,6 +147,7 @@ public class Food {
     enum ConfigKeys {
         // food keys
         RECIPES("recipes.", null),
+        MIXING("mixing.", null),
         CONTAINER("container", null),
         STACKABLE("stackable", false),
         INGREDIENTS("ingredients", null),

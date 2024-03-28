@@ -122,7 +122,7 @@ public class SkilletTile extends BasePlaceableItemTile implements Triggerable, S
                         .with(new LightUpEffectScheduler(GastroFun.plugin, 1L, 330L, 30, location), 0L)
                         .play(0L)
                         .complete(this)
-                        .then(new SkilletCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, location, players.stream().toList(), ingredients))
+                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 5, location, players.stream().toList(), ingredients))
                         .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 5, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }

@@ -9,6 +9,6 @@ import org.bukkit.util.Vector;
 public class MixingIngredientThird extends BaseMixingIngredient {
     public MixingIngredientThird(int entityId) {
         super(entityId + 3);
-        offset = new Vector(0, -0.35, 0);
+        offset = new Vector(0.05, -0.3, 0.05);
     }
 }

@@ -21,6 +21,7 @@ public class FoodManager extends BaseManager {
     private static FoodManager instance;
     private Map<String, Food> foodMap;
     private Map<String, String> recipeMap;
+    private Map<String, String> mixingMap;
     public FoodManager(JavaPlugin plugin) {
         super(plugin);
         instance = this;
@@ -36,6 +37,7 @@ public class FoodManager extends BaseManager {
     protected void onInit() {
         foodMap = new HashMap<>(5);
         recipeMap = new HashMap<>(5);
+        mixingMap = new HashMap<>(5);
 
         loadFoods();
         loadPlaceableFoods();
@@ -67,29 +69,34 @@ public class FoodManager extends BaseManager {
         }
     }
 
-    @Override
-    protected void onDisable() {
-
-    }
 
     public void registerRecipe(List<String> ingredients, String s) {
         recipeMap.put(BasicUtil.listToStringKey(ingredients), s);
+    }
+    public void registerMixing(List<String> ingredients, String s) {
+        mixingMap.put(BasicUtil.listToStringKey(ingredients), s);
     }
 
     public Food getFood(String foodName) {
         return foodMap.get(foodName);
     }
-
     public Collection<String> getNames() {
         return foodMap.keySet();
     }
 
     public Pair<Food, Integer> matchFood(List<ItemStack> items) {
+        return match(recipeMap, items);
+    }
+    public Pair<Food, Integer> matchMixing(List<ItemStack> items) {
+        return match(mixingMap, items);
+    }
+
+    private Pair<Food, Integer> match(Map<String, String> map, List<ItemStack> items) {
         List<String> ingredients = new ArrayList<>();
         for (ItemStack itemStack : items) {
             ingredients.add(itemStack.getType().name());
         }
-        String foodName = recipeMap.get(BasicUtil.listToStringKey(ingredients));
+        String foodName = map.get(BasicUtil.listToStringKey(ingredients));
         if (Objects.nonNull(foodName)) {
             String[] split = foodName.split(":");
             if (split.length >= 2) {

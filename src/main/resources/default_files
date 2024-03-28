@@ -1,3 +1,4 @@
+foods/dough.yml
 foods/meat_skewer.yml
 languages/en_US.yml
 pack/assets/gastrofun/models/block/grill.json
@@ -17,6 +18,7 @@ pack/assets/minecraft/models/item/red_dye.json
 pack/pack.mcmeta
 pack/pack.png
 placeable_foods/chocolate_pie.yml
+textures/foods/dough.png
 textures/foods/meat_skewer.png
 textures/placeable_foods/models/chocolate_pie/chocolate_pie_0.json
 textures/placeable_foods/models/chocolate_pie/chocolate_pie_1.json

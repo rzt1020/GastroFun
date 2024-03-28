@@ -3,25 +3,28 @@ package cn.myrealm.gastrofun.mechanics.items.tiles;
 
 import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
+import cn.myrealm.gastrofun.managers.mechanics.FoodManager;
+import cn.myrealm.gastrofun.mechanics.foods.Food;
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.mechanics.ingredients.mixing.BaseMixingIngredient;
 import cn.myrealm.gastrofun.mechanics.ingredients.mixing.MixingIngredientFirst;
 import cn.myrealm.gastrofun.mechanics.ingredients.mixing.MixingIngredientSecond;
 import cn.myrealm.gastrofun.mechanics.ingredients.mixing.MixingIngredientThird;
+import cn.myrealm.gastrofun.mechanics.items.SchedulerAble;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
 import cn.myrealm.gastrofun.mechanics.misc.ProgressBar;
-import cn.myrealm.gastrofun.mechanics.scheduler.animations.BlowMixingScheduler;
-import cn.myrealm.gastrofun.mechanics.scheduler.animations.ProgressBarScheduler;
-import cn.myrealm.gastrofun.mechanics.scheduler.animations.SkilletCompleteScheduler;
-import cn.myrealm.gastrofun.mechanics.scheduler.animations.SpoonMixingScheduler;
+import cn.myrealm.gastrofun.mechanics.scheduler.animations.*;
+import cn.myrealm.gastrofun.mechanics.scheduler.processes.FailureReturnScheduler;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import cn.myrealm.gastrofun.utils.WorldUtil;
+import com.comphenix.protocol.wrappers.Pair;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.joml.Quaternionf;
 
 import java.util.ArrayList;
@@ -31,11 +34,14 @@ import java.util.Objects;
 /**
  * @author rzt1020
  */
-public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable {
-    private Location location;
+public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable, SchedulerAble {
     private Quaternionf rotation;
     private final ProgressBar progressBar;
     private final List<BaseIngredient> ingredients = new ArrayList<>();
+    private CompleteDisplayScheduler completeDisplayScheduler;
+    private TextDisplayScheduler withoutContainerReminder;
+    private Food food;
+    private int recipeId;
 
     public MixingBowlTile() {
         super();
@@ -53,7 +59,10 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
         if (Objects.nonNull(itemStack)) {
             itemStack = itemStack.clone();
         }
-        return add(itemStack, location);
+        if (Objects.isNull(food)) {
+            return add(itemStack, location);
+        }
+        return take(player, itemStack, location);
     }
 
     private boolean add(ItemStack itemStack, Location location) {
@@ -65,8 +74,11 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
                 new BlowMixingScheduler(GastroFun.plugin, 1, 330, rotation, entityId, location, players.stream().toList(), ingredients)
                         .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
                         .with(new SpoonMixingScheduler(GastroFun.plugin, 1, 330, entityId + 1, players.stream().toList()), 0L)
-                        .play(0)
-                        .then(new SkilletCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, location, players.stream().toList(), ingredients));
+                        .play(0L)
+                        .complete(this)
+                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 6, location, players.stream().toList(), ingredients))
+                        .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 6, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
+                        .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {
                 ingredient = new MixingIngredientSecond(entityId);
@@ -85,6 +97,48 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
         return true;
     }
 
+    private boolean take(Player player, ItemStack itemStack, Location location) {
+        ItemStack container = food.getContainer();
+        if (Objects.isNull(container)) {
+            completeDisplayScheduler.end();
+            giveFood(player);
+        } else {
+            if (container.isSimilar(itemStack)) {
+                completeDisplayScheduler.end();
+                giveFood(player);
+                return true;
+            } else {
+                completeDisplayScheduler.speedUp();
+                if (Objects.isNull(withoutContainerReminder) || withoutContainerReminder.isEnd()) {
+                    withoutContainerReminder = new TextDisplayScheduler(GastroFun.plugin, 1L, 60L, "请使用合适的容器来取得食物", entityId+6, location.clone().add(0, 0.5, 0), players.stream().toList());
+                    withoutContainerReminder.play(0);
+                } else {
+                    withoutContainerReminder.updateEndTicks();
+                }
+            }
+        }
+        return false;
+    }
+    private void giveFood(Player player) {
+        ItemStack itemStack = food.getMixing(recipeId);
+        ingredients.clear();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (Objects.isNull(food)) {
+                    return;
+                }
+                if (player.getInventory().getItemInMainHand().getType().isAir()) {
+                    player.getInventory().setItemInMainHand(itemStack);
+                } else {
+                    player.getInventory().addItem(itemStack);
+                }
+                food = null;
+            }
+        }.runTaskLater(GastroFun.plugin, 1);
+
+    }
+
     @Override
     public void place(Location location, Quaternionf rotation, int state, ItemStack itemStack) {
         super.place(location, rotation, state, itemStack);
@@ -100,7 +154,6 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
     @Override
     public void display(Location location, Quaternionf rotation, int state) {
         super.display(location, rotation, state);
-        this.location = location;
         this.rotation = rotation;
     }
 
@@ -127,5 +180,25 @@ public class MixingBowlTile extends BasePlaceableItemTile implements Triggerable
         if (!players.isEmpty()) {
             PacketUtil.removeEntity(players.stream().toList(), entityId);
         }
+    }
+
+    @Override
+    public void schedulerCompleted() {
+        List<ItemStack> items = ingredients.stream().map(BaseIngredient::getItemStack).toList();
+        Pair<Food, Integer> pair = FoodManager.getInstance().matchMixing(items);
+        if (Objects.isNull(pair)) {
+            food = null;
+            return;
+        }
+        food = pair.getFirst();
+        recipeId = pair.getSecond();
+    }
+
+    @Override
+    public Object getResult() {
+        if (Objects.isNull(food)) {
+            return null;
+        }
+        return food.getMixing(recipeId);
     }
 }

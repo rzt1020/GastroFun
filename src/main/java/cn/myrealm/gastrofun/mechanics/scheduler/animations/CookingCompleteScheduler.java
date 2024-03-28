@@ -14,16 +14,18 @@ import java.util.List;
 /**
  * @author rzt1020
  */
-public class SkilletCompleteScheduler extends BaseScheduler {
+public class CookingCompleteScheduler extends BaseScheduler {
     private boolean up = true;
     private final int entityId;
+    private final int displayEntityId;
     private final Location location;
     private final List<Player> players;
     private final List<BaseIngredient> ingredients;
 
-    public SkilletCompleteScheduler(JavaPlugin plugin, long period, long endTicks, int entityId, Location location, List<Player> players, List<BaseIngredient> ingredients) {
+    public CookingCompleteScheduler(JavaPlugin plugin, long period, long endTicks, int entityId, int displayEntityId, Location location, List<Player> players, List<BaseIngredient> ingredients) {
         super(plugin, period, endTicks);
         this.entityId = entityId;
+        this.displayEntityId = displayEntityId;
         this.location = location.clone();
         this.players = players;
         this.ingredients = ingredients;
@@ -40,7 +42,7 @@ public class SkilletCompleteScheduler extends BaseScheduler {
         Vector displacement = new Vector(0, up? 0.1 : -0.1, 0);
         Vector displacement2 = new Vector(0, up? 0.2 : -0.1, 0);
         PacketUtil.moveEntityWithPacket(players, entityId, displacement);
-        PacketUtil.moveEntityWithPacket(players, entityId + 5, displacement);
+        PacketUtil.moveEntityWithPacket(players, displayEntityId, displacement);
         for (BaseIngredient ingredient : ingredients) {
             ingredient.move(players, displacement2);
         }

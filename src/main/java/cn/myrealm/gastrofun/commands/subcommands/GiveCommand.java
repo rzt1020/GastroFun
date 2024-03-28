@@ -91,6 +91,9 @@ public class GiveCommand implements SubCommand {
         if (Objects.nonNull(player)) {
             Food food = FoodManager.getInstance().getFood(args[THIRD_ARGUMENT]);
             ItemStack itemStack = food.getFood(Integer.parseInt(args[FOURTH_ARGUMENT]));
+            if (Objects.isNull(itemStack)) {
+                itemStack = food.getMixing(Integer.parseInt(args[FOURTH_ARGUMENT]));
+            }
             if (args.length == FIVE_ARGUMENTS) {
                 itemStack.setAmount(Integer.parseInt(args[FIFTH_ARGUMENT]));
             }

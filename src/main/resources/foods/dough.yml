@@ -1,0 +1,8 @@
+display_name: "Dough"
+stackable: true
+texture: dough
+mixing:
+  1:
+    ingredients: [WHEAT]
+    food_point: 1
+    saturation: 0.5
