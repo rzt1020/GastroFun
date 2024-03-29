@@ -37,6 +37,12 @@ public class ItemUtil {
         return itemStack;
     }
 
+    public static ItemStack generateItemStack(Material material, @Nullable Integer cmd, @Nullable String displayName, @Nullable List<String> lore, int amount) {
+        ItemStack itemStack = generateItemStack(material, cmd, displayName, lore);
+        itemStack.setAmount(amount);
+        return itemStack;
+    }
+
     public static void setDisplayName(ItemStack itemStack, String s) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (Objects.nonNull(itemMeta)) {

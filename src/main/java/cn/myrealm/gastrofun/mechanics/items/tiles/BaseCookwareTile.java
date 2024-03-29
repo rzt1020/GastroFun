@@ -44,8 +44,14 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
         }
         return take(player, itemStack, location);
     }
-    
-    
+
+
+    /**
+     * add ingredient to cookware
+     * @param itemStack the item stack of ingredient
+     * @param location the location of cookware
+     * @return is successful
+     */
     protected abstract boolean add(ItemStack itemStack, Location location);
 
     protected boolean take(Player player, ItemStack itemStack, Location location) {

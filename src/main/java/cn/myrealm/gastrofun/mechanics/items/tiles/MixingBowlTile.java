@@ -70,6 +70,8 @@ public class MixingBowlTile extends BaseCookwareTile {
                         .complete(this)
                         .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 6, location, players.stream().toList(), ingredients))
                         .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 6, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
+                        .with(new TextDisplayScheduler(GastroFun.plugin, 1L, -1L, "x1", entityId + 7, location, players.stream().toList()), 10L)
+                        .with(new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {

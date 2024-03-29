@@ -65,7 +65,7 @@ public abstract class BaseScheduler extends BukkitRunnable {
     @Override
     public void run() {
         count += period;
-        if (count >= endTicks) {
+        if (count >= endTicks && endTicks != -1) {
             end();
         }
     }

@@ -6,3 +6,13 @@ mixing:
     ingredients: [WHEAT]
     food_point: 1
     saturation: 0.5
+  2:
+    ingredients: [WHEAT, WHEAT]
+    amount: 2
+    food_point: 1
+    saturation: 0.5
+  3:
+    ingredients: [ WHEAT, WHEAT, WHEAT ]
+    amount: 3
+    food_point: 1
+    saturation: 0.5

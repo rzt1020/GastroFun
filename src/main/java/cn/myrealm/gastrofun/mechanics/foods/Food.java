@@ -120,10 +120,13 @@ public class Food {
             lore.addAll(BasicUtil.stringArray(bar.toString(), 10));
         }
 
+        int amount = ConfigKeys.AMOUNT.asInt(section);
+
+
         if (ConfigKeys.STACKABLE.asBoolean(config)) {
-            return ItemUtil.generateItemStack(Material.MELON_SLICE, TextureManager.getInstance().getFoodCustomModelData(foodName), displayName, lore);
+            return ItemUtil.generateItemStack(Material.MELON_SLICE, TextureManager.getInstance().getFoodCustomModelData(foodName), displayName, lore, amount);
         }
-        return ItemUtil.generateItemStack(Material.MUSHROOM_STEW, TextureManager.getInstance().getFoodCustomModelData(foodName), displayName, lore);
+        return ItemUtil.generateItemStack(Material.MUSHROOM_STEW, TextureManager.getInstance().getFoodCustomModelData(foodName), displayName, lore, amount);
     }
     protected void packageData(ItemStack itemStack, ConfigurationSection section) {
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -149,6 +152,7 @@ public class Food {
         RECIPES("recipes.", null),
         MIXING("mixing.", null),
         CONTAINER("container", null),
+        AMOUNT("amount", 1),
         STACKABLE("stackable", false),
         INGREDIENTS("ingredients", null),
         DISPLAY_NAME("display_name", ""),
