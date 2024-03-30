@@ -6,6 +6,7 @@ import cn.myrealm.gastrofun.mechanics.foods.Food;
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.mechanics.items.SchedulerAble;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
+import cn.myrealm.gastrofun.mechanics.scheduler.animations.AmountDisplayScheduler;
 import cn.myrealm.gastrofun.mechanics.scheduler.animations.CompleteDisplayScheduler;
 import cn.myrealm.gastrofun.mechanics.scheduler.animations.TextDisplayScheduler;
 import org.bukkit.Location;
@@ -24,6 +25,8 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
     protected final List<BaseIngredient> ingredients = new ArrayList<>();
     protected CompleteDisplayScheduler completeDisplayScheduler;
     protected TextDisplayScheduler withoutContainerReminder;
+    protected AmountDisplayScheduler amountDisplayScheduler;
+    protected ItemStack foodStack;
     protected Food food;
     protected int recipeId;
     public BaseCookwareTile() {
@@ -57,11 +60,9 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
     protected boolean take(Player player, ItemStack itemStack, Location location) {
         ItemStack container = food.getContainer();
         if (Objects.isNull(container)) {
-            completeDisplayScheduler.end();
             giveFood(player);
         } else {
             if (container.isSimilar(itemStack)) {
-                completeDisplayScheduler.end();
                 giveFood(player);
                 return true;
             } else {
@@ -78,21 +79,29 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
     }
 
     protected void giveFood(Player player) {
-        ItemStack itemStack = (ItemStack) getResult();
         ingredients.clear();
-
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Objects.isNull(itemStack)) {
+                if (Objects.isNull(foodStack)) {
                     return;
                 }
+                ItemStack itemStack = foodStack.clone();
+                itemStack.setAmount(1);
+                foodStack.setAmount(foodStack.getAmount() - 1);
                 if (player.getInventory().getItemInMainHand().getType().isAir()) {
                     player.getInventory().setItemInMainHand(itemStack);
-                } else {
+                }else if (player.getInventory().getItemInMainHand().isSimilar(itemStack)) {
+                    player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() + 1);
+                }else {
                     player.getInventory().addItem(itemStack);
                 }
-                food = null;
+                amountDisplayScheduler.updateAmount();
+                if (foodStack.getAmount() <= 0) {
+                    food = null;
+                    foodStack = null;
+                    completeDisplayScheduler.end();
+                }
             }
         }.runTaskLater(GastroFun.plugin, 1);
 

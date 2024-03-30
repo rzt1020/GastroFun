@@ -32,7 +32,8 @@ import java.util.Objects;
  */
 public class MixingBowlTile extends BaseCookwareTile {
     private Quaternionf rotation;
-    private final ProgressBar progressBar;
+
+    private ProgressBar progressBar;
 
     public MixingBowlTile() {
         super();
@@ -63,6 +64,7 @@ public class MixingBowlTile extends BaseCookwareTile {
             case 0 -> {
                 ingredient = new MixingIngredientFirst(entityId);
                 ingredients.add(ingredient);
+                CircularOffsetScheduler circularOffsetScheduler;
                 new BlowMixingScheduler(GastroFun.plugin, 1, 330, rotation, entityId, location, players.stream().toList(), ingredients)
                         .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
                         .with(new SpoonMixingScheduler(GastroFun.plugin, 1, 330, entityId + 1, players.stream().toList()), 0L)
@@ -70,8 +72,8 @@ public class MixingBowlTile extends BaseCookwareTile {
                         .complete(this)
                         .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 6, location, players.stream().toList(), ingredients))
                         .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 6, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
-                        .with(new TextDisplayScheduler(GastroFun.plugin, 1L, -1L, "x1", entityId + 7, location, players.stream().toList()), 10L)
-                        .with(new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
+                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
+                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players.stream().toList()), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {
@@ -149,9 +151,13 @@ public class MixingBowlTile extends BaseCookwareTile {
 
     @Override
     public Object getResult() {
+        if (Objects.nonNull(foodStack)) {
+            return foodStack;
+        }
         if (Objects.isNull(food)) {
             return null;
         }
-        return food.getMixing(recipeId);
+        foodStack = food.getMixing(recipeId);
+        return foodStack;
     }
 }

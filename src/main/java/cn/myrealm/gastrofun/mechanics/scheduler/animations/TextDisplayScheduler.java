@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TextDisplayScheduler extends BaseScheduler {
 
-    private final String text;
+    private String text;
     private final int entityId;
     private final Location location;
     private final List<Player> players;
@@ -37,6 +37,9 @@ public class TextDisplayScheduler extends BaseScheduler {
 
     public void updateEndTicks() {
         endTicks = count + endTicksBackUp;
+    }
+    public  void updateText(String text) {
+        this.text = text;
     }
 
     @Override

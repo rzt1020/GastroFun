@@ -109,6 +109,7 @@ public class SkilletTile extends BaseCookwareTile {
             case 0 -> {
                 ingredient = new SkilletIngredientFirst(entityId);
                 ingredients.add(ingredient);
+                CircularOffsetScheduler circularOffsetScheduler;
                 new SkilletCookingScheduler(GastroFun.plugin, 1L, 330L, entityId, location, players.stream().toList(), ingredients)
                         .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
                         .with(new LightUpEffectScheduler(GastroFun.plugin, 1L, 330L, 30, location), 0L)
@@ -116,6 +117,8 @@ public class SkilletTile extends BaseCookwareTile {
                         .complete(this)
                         .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 5, location, players.stream().toList(), ingredients))
                         .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 5, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
+                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
+                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players.stream().toList()), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {

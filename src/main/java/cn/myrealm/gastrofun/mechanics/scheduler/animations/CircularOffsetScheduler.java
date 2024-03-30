@@ -51,6 +51,11 @@ public class CircularOffsetScheduler extends BaseScheduler {
     }
 
     @Override
+    public void end() {
+        super.end();
+    }
+
+    @Override
     public void run() {
         for (Player player : players) {
             PacketUtil.teleportEntity(List.of(player), entityId, offsetLocationByPolarCoordinates(location, (getAngleBetweenLocations(location, player.getLocation()) - 90) % 360));

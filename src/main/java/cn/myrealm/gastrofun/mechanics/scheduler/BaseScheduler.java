@@ -53,6 +53,9 @@ public abstract class BaseScheduler extends BukkitRunnable {
     }
 
     protected void end() {
+        if (isCancelled()) {
+            return;
+        }
         this.cancel();
         if (Objects.nonNull(schedulerAble)) {
             schedulerAble.schedulerCompleted();
