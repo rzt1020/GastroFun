@@ -16,7 +16,7 @@ public class ProgressBar {
     private final int entityId;
     private String barString;
     private int progress;
-    private final List<Player> playerList = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     public ProgressBar(int entityId) {
         this.entityId = entityId;
         barString = Fonts.PROGRESS_BAR_0.toString();
@@ -27,10 +27,18 @@ public class ProgressBar {
         PacketUtil.spawnTextDisplay(playerList, location,barString, entityId, null, null);
     }
 
-    public void update(List<Player> playerList, Location location) {
+    public void update(List<Player> players1, Location location) {
+        players1 = new ArrayList<>(players1);
+        List<Player> players2 = new ArrayList<>(players1);
+        players2.removeAll(this.players);
+        display(players2, location);
+
+        this.players.clear();
+        this.players.addAll(players1);
+
         location = location.clone().add(0.5,0,0.5);
-        this.playerList.addAll(playerList);
-        for (Player player : playerList) {
+
+        for (Player player : players1) {
             PacketUtil.updateTextDisplay(List.of(player), barString, entityId, null, BasicUtil.directionToQuaternionDirectlyY(location, player.getLocation()));
         }
     }
@@ -86,7 +94,7 @@ public class ProgressBar {
     public void reset() {
         barString = Fonts.PROGRESS_BAR_0.toString();
         progress = 0;
-        PacketUtil.removeEntity(playerList, entityId);
-        playerList.clear();
+        PacketUtil.removeEntity(players, entityId);
+        players.clear();
     }
 }

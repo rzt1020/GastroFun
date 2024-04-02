@@ -3,6 +3,7 @@ package cn.myrealm.gastrofun.mechanics.scheduler.processes;
 
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.mechanics.items.SchedulerAble;
+import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
 import cn.myrealm.gastrofun.mechanics.scheduler.BaseScheduler;
 import org.bukkit.Location;
 import org.bukkit.entity.Item;

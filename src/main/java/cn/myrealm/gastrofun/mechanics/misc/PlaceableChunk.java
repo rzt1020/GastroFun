@@ -4,6 +4,7 @@ package cn.myrealm.gastrofun.mechanics.misc;
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
+import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
 import cn.myrealm.gastrofun.mechanics.persistent.LocationTagType;
 import cn.myrealm.gastrofun.mechanics.persistent.QuaternionTagType;
 import cn.myrealm.gastrofun.utils.BasicUtil;
@@ -27,6 +28,7 @@ public class PlaceableChunk {
     private final Map<Integer, Location> placeableItemLocationMap = new HashMap<>();
     private final Map<Integer, Quaternionf> placeableItemRotationMap = new HashMap<>();
     private final Map<Integer, Integer> placeableItemStateMap = new HashMap<>();
+
 
 
     public PlaceableChunk(String chunkName) {
@@ -56,7 +58,19 @@ public class PlaceableChunk {
         }
     }
 
-    public void unloadChunk() {
+    public boolean unloadChunk() {
+        for (int entityId : placeableItemsEntityIds) {
+            BasePlaceableItem placeableItem = PlaceableItemManager.getInstance().getPlaceableItem(placeableNameMap.get(entityId));
+            BasePlaceableItemTile placeableItemTile = placeableItem.getTile(placeableItemLocationMap.get(entityId));
+            if (placeableItemTile.isFunctioning()) {
+                return false;
+            }
+        }
+        forceUnloadChunk();
+        return true;
+    }
+
+    public void forceUnloadChunk() {
         for (int entityId : placeableItemsEntityIds) {
             NamespacedKeys.PLACEABLE_ITEM_NAME.set(chunk, PersistentDataType.STRING, placeableNameMap.get(entityId), String.valueOf(entityId));
             NamespacedKeys.PLACEABLE_ITEM_LOCATION.set(chunk, new LocationTagType(), placeableItemLocationMap.get(entityId), String.valueOf(entityId));
@@ -88,4 +102,6 @@ public class PlaceableChunk {
     public void updateState(int entityId, int state) {
         placeableItemStateMap.put(entityId, state);
     }
+
+
 }

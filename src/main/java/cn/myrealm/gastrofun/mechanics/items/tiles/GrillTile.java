@@ -87,4 +87,9 @@ public class GrillTile extends BasePlaceableItemTile implements Triggerable {
         }
         return false;
     }
+
+    @Override
+    public boolean isFunctioning() {
+        return false;
+    }
 }

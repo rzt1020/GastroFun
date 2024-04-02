@@ -46,7 +46,7 @@ public class SkilletCookingScheduler extends BaseScheduler {
 
         PacketUtil.moveEntityWithPacket(players, entityId, displacement);
         for (BaseIngredient ingredient : ingredients) {
-            ingredient.move(players.stream().toList(), displacement);
+            ingredient.move(players.stream().toList(), displacement, location);
         }
 
         theta += Math.PI / 20;

@@ -10,19 +10,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.joml.Quaternionf;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author rzt1020
  */
 public abstract class BasePlaceableItemTile implements Placeable {
     protected final int entityId;
+    protected Location location;
     protected String placeableName;
     private TryRemoveScheduler tryRemoveScheduler;
     protected int state = 0;
-    protected final Set<Player> players = new HashSet<>();
+    protected List<Player> players = new ArrayList<>();
 
     public BasePlaceableItemTile() {
         entityId = Math.abs(GastroFun.RANDOM.nextInt());
@@ -41,6 +40,7 @@ public abstract class BasePlaceableItemTile implements Placeable {
 
     @Override
     public void display(Location location, Quaternionf rotation, int state) {
+        this.location = location;
         this.state = state;
         sendEntityPacket(location, rotation, state);
     }
@@ -86,4 +86,10 @@ public abstract class BasePlaceableItemTile implements Placeable {
             tryRemoveScheduler = null;
         }
     }
+
+    /**
+     * if function working
+     * @return is function working
+     */
+    public abstract boolean isFunctioning();
 }

@@ -44,7 +44,7 @@ public class CookingCompleteScheduler extends BaseScheduler {
         PacketUtil.moveEntityWithPacket(players, entityId, displacement);
         PacketUtil.moveEntityWithPacket(players, displayEntityId, displacement);
         for (BaseIngredient ingredient : ingredients) {
-            ingredient.move(players, displacement2);
+            ingredient.move(players, displacement2, location);
         }
         if (count >= 9) {
             up = false;

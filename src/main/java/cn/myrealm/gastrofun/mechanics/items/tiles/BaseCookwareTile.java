@@ -10,6 +10,7 @@ import cn.myrealm.gastrofun.mechanics.scheduler.animations.AmountDisplaySchedule
 import cn.myrealm.gastrofun.mechanics.scheduler.animations.CompleteDisplayScheduler;
 import cn.myrealm.gastrofun.mechanics.scheduler.animations.TextDisplayScheduler;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,9 +42,14 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
     public boolean trigger(Player player, ItemStack itemStack, Location location) {
         if (Objects.nonNull(itemStack)) {
             itemStack = itemStack.clone();
+        } else {
+            itemStack = new ItemStack(Material.AIR);
         }
         if (Objects.isNull(food)) {
-            return add(itemStack, location);
+            if (!itemStack.getType().isAir()) {
+                return add(itemStack, location);
+            }
+            return false;
         }
         return take(player, itemStack, location);
     }
@@ -104,6 +110,10 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
                 }
             }
         }.runTaskLater(GastroFun.plugin, 1);
+    }
 
+    @Override
+    public boolean isFunctioning() {
+        return !ingredients.isEmpty() || Objects.nonNull(food);
     }
 }

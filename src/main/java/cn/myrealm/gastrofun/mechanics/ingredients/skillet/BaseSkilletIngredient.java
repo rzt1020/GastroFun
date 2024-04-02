@@ -4,6 +4,7 @@ import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.mechanics.ingredients.BaseIngredient;
 import cn.myrealm.gastrofun.utils.PacketUtil;
 import cn.myrealm.gastrofun.utils.WorldUtil;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -19,7 +20,7 @@ public abstract class BaseSkilletIngredient extends BaseIngredient {
     protected int start, mid, end;
 
     @Override
-    public void move(List<Player> players, Vector displacement) {
+    public void move(List<Player> players, Vector displacement, Location location) {
         updateRandomness();
         displacement = displacement.clone();
         if (start <= WorldUtil.getWorldTime("world") % 300 && WorldUtil.getWorldTime("world") % 300 < mid) {
@@ -31,7 +32,7 @@ public abstract class BaseSkilletIngredient extends BaseIngredient {
             currentDisplacement --;
             sendRotatePacket(players);
         }
-        super.move(players, displacement);
+        super.move(players, displacement, location);
     }
 
     private void sendRotatePacket(List<Player> players) {

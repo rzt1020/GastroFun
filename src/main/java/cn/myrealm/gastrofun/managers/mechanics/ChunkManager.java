@@ -4,6 +4,7 @@ package cn.myrealm.gastrofun.managers.mechanics;
 import cn.myrealm.gastrofun.managers.BaseManager;
 import cn.myrealm.gastrofun.mechanics.misc.PlaceableChunk;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class ChunkManager extends BaseManager {
     @Override
     protected void onDisable() {
         for (PlaceableChunk chunk : chunksMap.values()) {
-            chunk.unloadChunk();
+            chunk.forceUnloadChunk();
         }
         chunksMap.clear();
     }
@@ -49,6 +50,7 @@ public class ChunkManager extends BaseManager {
                         chunk.getZ()))
                 .collect(Collectors.toSet());
         oldChunks.removeAll(newChunks);
+        newChunks.addAll(oldChunks);
 
         for (String chunk : newChunks) {
             if (chunksMap.containsKey(chunk)) {
@@ -59,8 +61,9 @@ public class ChunkManager extends BaseManager {
         }
 
         for (String chunk : oldChunks) {
-            chunksMap.get(chunk).unloadChunk();
-            chunksMap.remove(chunk);
+            if (chunksMap.get(chunk).unloadChunk()) {
+                chunksMap.remove(chunk);
+            }
         }
     }
 
@@ -70,4 +73,5 @@ public class ChunkManager extends BaseManager {
                 chunk.getX(),
                 chunk.getZ()));
     }
+
 }

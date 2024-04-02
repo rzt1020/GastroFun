@@ -44,9 +44,6 @@ public enum DefaultItems {
         return itemSupplier.get().generate();
     }
 
-    public boolean isPlaceable() {
-        return Placeable.class.isAssignableFrom(itemSupplier.get().getClass());
-    }
 
     public static DefaultItems getByName(String name) {
         for (DefaultItems defaultItem : DefaultItems.values()) {

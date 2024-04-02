@@ -48,7 +48,7 @@ public interface SubCommand {
      * get tab complete of sub command
      *
      * @param argsNum size of args
-     * @param args
+     * @param args arguments
      * @return List<String>
      */
     List<String> onTabComplete(int argsNum, String[] args);

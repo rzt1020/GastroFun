@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.joml.Quaternionf;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,18 +68,21 @@ public class SkilletTile extends BaseCookwareTile {
     public void sendEntityPacket(Location location, Quaternionf rotation, int state) {
         ItemStack itemStack = ItemUtil.generateItemStack(Material.RED_DYE, DefaultItems.SKILLET.getCustomModelData(), null, null);
         List<Player> players = BasicUtil.getNearbyPlayers(location, 16);
+        List<Player> players1 = new ArrayList<>(players);
         players.removeAll(this.players);
         if (!players.isEmpty()) {
             PacketUtil.spawnItemDisplay(players, location, itemStack, entityId, null, rotation);
         }
         this.players.addAll(players);
+        this.players.clear();
+        this.players.addAll(players1);;
     }
 
     @Override
     public void hide(Location location) {
         super.hide(location);
         for (BaseIngredient ingredient : ingredients) {
-            ingredient.hide(players.stream().toList());
+            ingredient.hide(players);
         }
     }
 
@@ -86,21 +90,10 @@ public class SkilletTile extends BaseCookwareTile {
     @Override
     public void removeEntityPacket(Location location) {
         if (!players.isEmpty()) {
-            PacketUtil.removeEntity(players.stream().toList(), entityId);
+            PacketUtil.removeEntity(players, entityId);
         }
     }
 
-
-    @Override
-    public boolean trigger(Player player, ItemStack itemStack, Location location) {
-        if (Objects.nonNull(itemStack)) {
-            itemStack = itemStack.clone();
-        }
-        if (Objects.isNull(food)) {
-            return add(itemStack, location);
-        }
-        return take(player, itemStack, location);
-    }
 
     @Override
     protected boolean add(ItemStack itemStack, Location location) {
@@ -110,15 +103,15 @@ public class SkilletTile extends BaseCookwareTile {
                 ingredient = new SkilletIngredientFirst(entityId);
                 ingredients.add(ingredient);
                 CircularOffsetScheduler circularOffsetScheduler;
-                new SkilletCookingScheduler(GastroFun.plugin, 1L, 330L, entityId, location, players.stream().toList(), ingredients)
-                        .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
+                new SkilletCookingScheduler(GastroFun.plugin, 1L, 330L, entityId, location, players, ingredients)
+                        .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players), 0L)
                         .with(new LightUpEffectScheduler(GastroFun.plugin, 1L, 330L, 30, location), 0L)
                         .play(0L)
                         .complete(this)
-                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 5, location, players.stream().toList(), ingredients))
-                        .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 5, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
-                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
-                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players.stream().toList()), 10L)
+                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 5, location, players, ingredients))
+                        .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 5, location.clone().add(0, 1, 0), players, this), 10L)
+                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players), 10L)
+                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {
@@ -134,7 +127,7 @@ public class SkilletTile extends BaseCookwareTile {
             }
         }
         ingredient.setItemStack(itemStack);
-        ingredient.display(players.stream().toList(), location);
+        ingredient.display(players, location);
         return true;
     }
 
@@ -152,9 +145,13 @@ public class SkilletTile extends BaseCookwareTile {
 
     @Override
     public Object getResult() {
+        if (Objects.nonNull(foodStack)) {
+            return foodStack;
+        }
         if (Objects.isNull(food)) {
             return null;
         }
-        return food.getFood(recipeId);
+        foodStack = food.getFood(recipeId);
+        return foodStack;
     }
 }

@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.joml.Quaternionf;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,16 +47,6 @@ public class MixingBowlTile extends BaseCookwareTile {
         progressBar = new ProgressBar(entityId + 5);
     }
 
-    @Override
-    public boolean trigger(Player player, ItemStack itemStack, Location location) {
-        if (Objects.nonNull(itemStack)) {
-            itemStack = itemStack.clone();
-        }
-        if (Objects.isNull(food)) {
-            return add(itemStack, location);
-        }
-        return take(player, itemStack, location);
-    }
 
     @Override
     protected boolean add(ItemStack itemStack, Location location) {
@@ -65,15 +56,15 @@ public class MixingBowlTile extends BaseCookwareTile {
                 ingredient = new MixingIngredientFirst(entityId);
                 ingredients.add(ingredient);
                 CircularOffsetScheduler circularOffsetScheduler;
-                new BlowMixingScheduler(GastroFun.plugin, 1, 330, rotation, entityId, location, players.stream().toList(), ingredients)
-                        .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players.stream().toList()), 0L)
-                        .with(new SpoonMixingScheduler(GastroFun.plugin, 1, 330, entityId + 1, players.stream().toList()), 0L)
+                new BlowMixingScheduler(GastroFun.plugin, 1, 330, rotation, entityId, location, players, ingredients)
+                        .with(new ProgressBarScheduler(GastroFun.plugin, 1L, 330L, progressBar, location, players), 0L)
+                        .with(new SpoonMixingScheduler(GastroFun.plugin, 1, 330, entityId + 1, players), 0L)
                         .play(0L)
                         .complete(this)
-                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 6, location, players.stream().toList(), ingredients))
-                        .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 6, location.clone().add(0, 1, 0), players.stream().toList(), this), 10L)
-                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players.stream().toList()), 10L)
-                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players.stream().toList()), 10L)
+                        .then(new CookingCompleteScheduler(GastroFun.plugin, 1L, 20L, entityId, entityId + 6, location, players, ingredients))
+                        .with(completeDisplayScheduler = new CompleteDisplayScheduler(GastroFun.plugin, 1L, -1L, entityId + 6, location.clone().add(0, 1, 0), players, this), 10L)
+                        .with(circularOffsetScheduler =new CircularOffsetScheduler(GastroFun.plugin, 1L, -1L, 0.5, entityId + 7, location, players), 10L)
+                        .with(amountDisplayScheduler = new AmountDisplayScheduler(GastroFun.plugin, 1L, -1L,this, circularOffsetScheduler , entityId + 7, location, players), 10L)
                         .with(new FailureReturnScheduler(GastroFun.plugin, this, location.clone().add(0, 1, 0), ingredients), 10L);
             }
             case 1 -> {
@@ -89,7 +80,7 @@ public class MixingBowlTile extends BaseCookwareTile {
             }
         }
         ingredient.setItemStack(itemStack);
-        ingredient.display(players.stream().toList(), location);
+        ingredient.display(players, location);
         return true;
     }
 
@@ -117,11 +108,13 @@ public class MixingBowlTile extends BaseCookwareTile {
     public void sendEntityPacket(Location location, Quaternionf rotation, int state) {
         ItemStack itemStack = ItemUtil.generateItemStack(Material.RED_DYE, DefaultItems.MIXING_BOWL.getCustomModelData(), null, null);
         List<Player> players = BasicUtil.getNearbyPlayers(location, 16);
+        List<Player> players1 = new ArrayList<>(players);
         players.removeAll(this.players);
         if (!players.isEmpty()) {
             PacketUtil.spawnItemDisplay(players, location, itemStack, entityId, null, rotation);
         }
-        this.players.addAll(players);
+        this.players.clear();
+        this.players.addAll(players1);;
     }
 
     @Override
@@ -133,7 +126,7 @@ public class MixingBowlTile extends BaseCookwareTile {
     @Override
     public void removeEntityPacket(Location location) {
         if (!players.isEmpty()) {
-            PacketUtil.removeEntity(players.stream().toList(), entityId);
+            PacketUtil.removeEntity(players, entityId);
         }
     }
 

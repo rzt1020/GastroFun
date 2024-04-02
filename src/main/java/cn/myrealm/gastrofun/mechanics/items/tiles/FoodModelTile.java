@@ -117,4 +117,9 @@ public class FoodModelTile extends BasePlaceableItemTile implements Triggerable 
             PacketUtil.removeEntity(players.stream().toList(), entityId);
         }
     }
+
+    @Override
+    public boolean isFunctioning() {
+        return false;
+    }
 }

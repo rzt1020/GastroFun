@@ -9,7 +9,10 @@ import org.bukkit.util.Vector;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author rzt1020
@@ -20,6 +23,7 @@ public abstract class BaseIngredient {
     protected Vector offset = new Vector();
     protected ItemStack itemStack;
     protected int entityId;
+    protected final List<Player> players = new ArrayList<>();
 
     public void setItemStack(ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -30,7 +34,11 @@ public abstract class BaseIngredient {
 
     public void display(List<Player> playerList, Location location) {
         location = location.clone().add(offset);
-        rotation.mul(BasicUtil.directionToQuaternionDirectlyZ(location, BasicUtil.getNearestPlayer(location).getLocation()));
+        Player player = BasicUtil.getNearestPlayer(location);
+        if (Objects.isNull(player)) {
+            return;
+        }
+        rotation.mul(BasicUtil.directionToQuaternionDirectlyZ(location, player.getLocation()));
         PacketUtil.spawnItemDisplay(playerList, location, itemStack, entityId, scale, rotation);
     }
 
@@ -38,12 +46,26 @@ public abstract class BaseIngredient {
         PacketUtil.removeEntity(playerList, entityId);
     }
 
-    public void move(List<Player> players, Vector displacement) {
+    public void move(List<Player> players, Vector displacement, Location location) {
+        update(players, location);
         PacketUtil.moveEntityWithPacket(players, entityId, displacement);
     }
 
 
-    public void tilt(List<Player> players, float roll, float pitch) {
+    public void tilt(List<Player> players, float roll, float pitch, Location location) {
+        update(players, location);
         PacketUtil.tiltEntity(players, entityId, roll, pitch);
     }
+
+    private void update(List<Player> players, Location location) {
+        List<Player> newPlayers = players.stream()
+                .filter(player -> !this.players.contains(player))
+                .collect(Collectors.toList());
+
+        display(newPlayers, location);
+
+        this.players.clear();
+        this.players.addAll(players);
+    }
+
 }

@@ -152,4 +152,9 @@ public abstract class BasePlaceableItem implements Placeable {
         }
         tile.giveUpRemove();
     }
+
+    public BasePlaceableItemTile getTile(Location location) {
+        return tiles.get(location);
+    }
+
 }

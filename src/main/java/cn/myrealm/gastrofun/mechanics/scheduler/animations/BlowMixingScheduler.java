@@ -54,7 +54,7 @@ public class BlowMixingScheduler extends BaseScheduler {
         PacketUtil.tiltEntity(players, entityId+1, roll, pitch);
 
         for (BaseIngredient ingredient : ingredients) {
-            ingredient.tilt(players, roll , pitch);
+            ingredient.tilt(players, roll , pitch, location);
         }
 
         theta += Math.PI / 20;
