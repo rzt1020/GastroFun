@@ -25,7 +25,9 @@ public enum NamespacedKeys {
     PLACEABLE_ITEM_NAME("placeable_item_name.{0}"),
     PLACEABLE_ITEM_LOCATION("placeable_item_location.{0}"),
     PLACEABLE_ITEM_ROTATION("placeable_item_rotation.{0}"),
-    PLACEABLE_ITEM_STATE("placeable_item_state.{0}");
+    PLACEABLE_ITEM_STATE("placeable_item_state.{0}"),
+    // misc
+    ITEM_STACK("item_stack.{0}");
 
     private final String key;
     NamespacedKeys(String key) {

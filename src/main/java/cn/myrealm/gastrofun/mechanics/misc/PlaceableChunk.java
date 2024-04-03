@@ -1,17 +1,21 @@
 package cn.myrealm.gastrofun.mechanics.misc;
 
 
+import cn.myrealm.gastrofun.GastroFun;
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
 import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
 import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
+import cn.myrealm.gastrofun.mechanics.persistent.ItemStackTagType;
 import cn.myrealm.gastrofun.mechanics.persistent.LocationTagType;
 import cn.myrealm.gastrofun.mechanics.persistent.QuaternionTagType;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.joml.Quaternionf;
 
 import java.util.HashMap;
@@ -28,6 +32,7 @@ public class PlaceableChunk {
     private final Map<Integer, Location> placeableItemLocationMap = new HashMap<>();
     private final Map<Integer, Quaternionf> placeableItemRotationMap = new HashMap<>();
     private final Map<Integer, Integer> placeableItemStateMap = new HashMap<>();
+    private final static ItemStackTagType ITEM_STACK_TAG_TYPE = new ItemStackTagType();
 
 
 
@@ -48,7 +53,13 @@ public class PlaceableChunk {
             placeableItemRotationMap.put(entityId, rotation);
             placeableItemStateMap.put(entityId, state);
         }
-        display();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                display();
+            }
+        }.runTaskLater(GastroFun.plugin, 1L);
+
     }
 
     public void display() {
@@ -103,5 +114,15 @@ public class PlaceableChunk {
         placeableItemStateMap.put(entityId, state);
     }
 
+    public void storeItemStack(int uniqueId, ItemStack itemStack) {
+        chunk.getPersistentDataContainer().set(NamespacedKeys.ITEM_STACK.getNamespacedKey(String.valueOf(uniqueId)), ITEM_STACK_TAG_TYPE, itemStack);
+    }
+
+    public ItemStack getItemStack(int uniqueId) {
+        if (chunk.getPersistentDataContainer().has(NamespacedKeys.ITEM_STACK.getNamespacedKey(String.valueOf(uniqueId)))) {
+            return chunk.getPersistentDataContainer().get(NamespacedKeys.ITEM_STACK.getNamespacedKey(String.valueOf(uniqueId)), ITEM_STACK_TAG_TYPE);
+        }
+        return null;
+    }
 
 }

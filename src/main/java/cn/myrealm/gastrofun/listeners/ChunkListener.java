@@ -57,11 +57,5 @@ public class ChunkListener extends BaseListener {
         playerChunkMap.remove(event.getPlayer());
     }
 
-    @EventHandler
-    public void onPlayerMoving(PlayerMoveEvent event) {
-        if (Objects.nonNull(event.getTo())) {
-            playerChunkMap.put(event.getPlayer(), getChunks(event.getTo()));
-        }
-    }
 
 }

@@ -68,6 +68,7 @@ public class ChunkManager extends BaseManager {
     }
 
     public PlaceableChunk getChunk(Chunk chunk) {
+        System.out.println(chunksMap);
         return chunksMap.get(String.format("%s,%d,%d",
                 chunk.getWorld().getName(),
                 chunk.getX(),

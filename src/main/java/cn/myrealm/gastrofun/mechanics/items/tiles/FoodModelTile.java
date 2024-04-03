@@ -8,6 +8,7 @@ import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.managers.system.TextureManager;
 import cn.myrealm.gastrofun.mechanics.foods.PlaceableFood;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
+import cn.myrealm.gastrofun.mechanics.misc.PlaceableChunk;
 import cn.myrealm.gastrofun.mechanics.persistent.ItemStackTagType;
 import cn.myrealm.gastrofun.utils.BasicUtil;
 import cn.myrealm.gastrofun.utils.ItemUtil;
@@ -44,8 +45,9 @@ public class FoodModelTile extends BasePlaceableItemTile implements Triggerable 
     @Override
     public void place(Location location, Quaternionf rotation, int state, ItemStack itemStack) {
         itemStack = itemStack.clone();
-        ChunkManager.getInstance().getChunk(location.getChunk()).writePlaceableItem(entityId, placeableName+':'+placeableFoodName, location, rotation, state);
-        location.getChunk().getPersistentDataContainer().set(NamespacedKeys.PLACEABLE_FOOD_ITEM_STACK.getNamespacedKey(String.valueOf(entityId)), ITEM_STACK_TAG_TYPE, itemStack);
+        PlaceableChunk placeableChunk = ChunkManager.getInstance().getChunk(location.getChunk());
+        placeableChunk.writePlaceableItem(entityId, placeableName+':'+placeableFoodName, location, rotation, state);
+        placeableChunk.storeItemStack(entityId, itemStack);
         placeableFoodItemStack = itemStack;
         display(location, rotation, state);
         WorldUtil.changeBlock(location, Material.TRIPWIRE);
@@ -60,7 +62,7 @@ public class FoodModelTile extends BasePlaceableItemTile implements Triggerable 
     @Override
     public void display(Location location, Quaternionf rotation, int state) {
         if (Objects.isNull(placeableFoodItemStack)) {
-            placeableFoodItemStack = location.getChunk().getPersistentDataContainer().get(NamespacedKeys.PLACEABLE_FOOD_ITEM_STACK.getNamespacedKey(String.valueOf(entityId)), ITEM_STACK_TAG_TYPE);
+            placeableFoodItemStack = ChunkManager.getInstance().getChunk(location.getChunk()).getItemStack(entityId);
         }
         super.display(location, rotation, state);
         this.rotation = rotation;
