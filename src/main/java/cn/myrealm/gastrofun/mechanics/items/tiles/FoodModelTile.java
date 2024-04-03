@@ -32,14 +32,12 @@ public class FoodModelTile extends BasePlaceableItemTile implements Triggerable 
     private ItemStack placeableFoodItemStack;
     private final static ItemStackTagType ITEM_STACK_TAG_TYPE = new ItemStackTagType();
     public FoodModelTile(String placeableFoodName, PlaceableFood placeableFood) {
-        super();
-        this.placeableName = "food_model";
+        super("food_model");
         this.placeableFoodName = placeableFoodName;
         this.placeableFood = placeableFood;
     }
     public FoodModelTile(int entityId, String placeableFoodName, PlaceableFood placeableFood) {
-        super(entityId);
-        this.placeableName = "food_model";
+        super(entityId, "food_model");
         this.placeableFoodName = placeableFoodName;
         this.placeableFood = placeableFood;
     }
@@ -50,7 +48,7 @@ public class FoodModelTile extends BasePlaceableItemTile implements Triggerable 
         location.getChunk().getPersistentDataContainer().set(NamespacedKeys.PLACEABLE_FOOD_ITEM_STACK.getNamespacedKey(String.valueOf(entityId)), ITEM_STACK_TAG_TYPE, itemStack);
         placeableFoodItemStack = itemStack;
         display(location, rotation, state);
-        WorldUtil.changeBlock(location, Material.BARRIER);
+        WorldUtil.changeBlock(location, Material.TRIPWIRE);
     }
 
     @Override

@@ -22,8 +22,7 @@ public class FoodModel extends BasePlaceableItem implements Triggerable {
     private final String placeableFoodName;
     private final PlaceableFood placeableFood;
     public FoodModel(String placeableFoodName, PlaceableFood placeableFood) {
-        super();
-        placeableName = "food_model";
+        super("food_model");
         this.placeableFoodName = placeableFoodName;
         this.placeableFood = placeableFood;
     }

@@ -21,12 +21,10 @@ import java.util.Objects;
 public class GrillTile extends BasePlaceableItemTile implements Triggerable {
 
     public GrillTile() {
-        super();
-        placeableName = "grill";
+        super("grill");
     }
     public GrillTile(int entityId) {
-        super(entityId);
-        placeableName = "grill";
+        super(entityId, "grill");
     }
 
     @Override

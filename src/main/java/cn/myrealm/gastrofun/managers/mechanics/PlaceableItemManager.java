@@ -2,10 +2,7 @@ package cn.myrealm.gastrofun.managers.mechanics;
 
 
 import cn.myrealm.gastrofun.managers.BaseManager;
-import cn.myrealm.gastrofun.mechanics.items.items.BasePlaceableItem;
-import cn.myrealm.gastrofun.mechanics.items.items.Grill;
-import cn.myrealm.gastrofun.mechanics.items.items.MixingBowl;
-import cn.myrealm.gastrofun.mechanics.items.items.Skillet;
+import cn.myrealm.gastrofun.mechanics.items.items.*;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +31,7 @@ public class PlaceableItemManager extends BaseManager {
         registerPlaceableItem(new Skillet());
         registerPlaceableItem(new Grill());
         registerPlaceableItem(new MixingBowl());
+        registerPlaceableItem(new Tray());
     }
 
     public void registerPlaceableItem(BasePlaceableItem item) {

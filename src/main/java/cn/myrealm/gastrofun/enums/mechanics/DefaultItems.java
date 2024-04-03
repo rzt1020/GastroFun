@@ -2,10 +2,7 @@ package cn.myrealm.gastrofun.enums.mechanics;
 
 import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
 import cn.myrealm.gastrofun.mechanics.items.Placeable;
-import cn.myrealm.gastrofun.mechanics.items.items.Grill;
-import cn.myrealm.gastrofun.mechanics.items.items.MixingBowl;
-import cn.myrealm.gastrofun.mechanics.items.items.MixingSpoon;
-import cn.myrealm.gastrofun.mechanics.items.items.Skillet;
+import cn.myrealm.gastrofun.mechanics.items.items.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -21,7 +18,8 @@ public enum DefaultItems {
     SKILLET("skillet", 10000, Skillet::new, true),
     GRILL("grill", 10001, Grill::new, true),
     MIXING_BOWL("mixing_bowl", 10002, MixingBowl::new, true),
-    MIXING_SPOON("mixing_spoon", 10003, MixingSpoon::new, false);
+    MIXING_SPOON("mixing_spoon", 10003, MixingSpoon::new, false),
+    TRAY("tray", 10004, Tray::new, false);
     private final String name;
     private final int customModelData;
     private final Supplier<DefaultItem> itemSupplier;

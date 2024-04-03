@@ -25,8 +25,7 @@ import java.util.Objects;
 public class MixingBowl extends BasePlaceableItem implements DefaultItem, Triggerable {
 
     public MixingBowl() {
-        super();
-        placeableName = "mixing_bowl";
+        super("mixing_bowl");
     }
 
     @Override

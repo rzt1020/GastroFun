@@ -18,18 +18,18 @@ import java.util.*;
 public abstract class BasePlaceableItemTile implements Placeable {
     protected final int entityId;
     protected Location location;
-    protected String placeableName;
+    protected final String placeableName;
     private TryRemoveScheduler tryRemoveScheduler;
     protected int state = 0;
     protected List<Player> players = new ArrayList<>();
 
-    public BasePlaceableItemTile() {
+    public BasePlaceableItemTile(String placeableName) {
         entityId = Math.abs(GastroFun.RANDOM.nextInt());
-        placeableName = "";
+        this.placeableName = placeableName;
     }
-    public BasePlaceableItemTile(int entityId) {
+    public BasePlaceableItemTile(int entityId, String placeableName) {
         this.entityId = entityId;
-        placeableName = "";
+        this.placeableName = placeableName;
     }
 
     @Override

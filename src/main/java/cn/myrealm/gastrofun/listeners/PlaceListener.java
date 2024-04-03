@@ -9,6 +9,8 @@ import cn.myrealm.gastrofun.utils.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -44,12 +46,15 @@ public class PlaceListener extends BaseListener {
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (Objects.isNull(itemMeta) || !NamespacedKeys.PLACEABLE_NAME.has(itemMeta, PersistentDataType.STRING)) {
-            return;
+            if (!itemStack.getType().equals(Material.BOWL)) {
+                return;
+            }
         }
         event.setCancelled(true);
         if (playerCache.contains(event.getPlayer())) {
             return;
         }
+
         playerCache.add(event.getPlayer());
         new BukkitRunnable() {
             @Override
@@ -57,12 +62,16 @@ public class PlaceListener extends BaseListener {
                 playerCache.remove(event.getPlayer());
             }
         }.runTaskLater(plugin, 5L);
-        BasePlaceableItem placeableItem = PlaceableItemManager.getInstance().getPlaceableItem((String) NamespacedKeys.PLACEABLE_NAME.get(itemMeta, PersistentDataType.STRING));
+        BasePlaceableItem placeableItem;
+        if (itemStack.getType().equals(Material.BOWL)) {
+            placeableItem = PlaceableItemManager.getInstance().getPlaceableItem("tray");
+        } else {
+            placeableItem = PlaceableItemManager.getInstance().getPlaceableItem((String) NamespacedKeys.PLACEABLE_NAME.get(itemMeta, PersistentDataType.STRING));
+        }
         Location location = placeableItem.getLocation(event.getClickedBlock(), event.getBlockFace());
         if (Objects.isNull(location) || Objects.nonNull(PlaceableItemManager.getInstance().getPlaceableItem(location))) {
             return;
         }
-
         Bukkit.getScheduler().runTaskLater(GastroFun.plugin, () -> {
             Location playerLocation = event.getPlayer().getLocation().getBlock().getLocation();
             if (placeableItem.mustAir() && !location.getBlock().getType().isAir()) {

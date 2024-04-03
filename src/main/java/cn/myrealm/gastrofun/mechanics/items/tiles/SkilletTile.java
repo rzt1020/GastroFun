@@ -36,13 +36,11 @@ public class SkilletTile extends BaseCookwareTile {
 
 
     public SkilletTile() {
-        super();
-        placeableName = "skillet";
+        super("skillet");
         progressBar = new ProgressBar(entityId + 4);
     }
     public SkilletTile(int entityId) {
-        super(entityId);
-        placeableName = "skillet";
+        super(entityId, "skillet");
         progressBar = new ProgressBar(entityId + 4);
     }
 
@@ -154,4 +152,5 @@ public class SkilletTile extends BaseCookwareTile {
         foodStack = food.getFood(recipeId);
         return foodStack;
     }
+
 }

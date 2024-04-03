@@ -30,12 +30,12 @@ public abstract class BaseCookwareTile extends BasePlaceableItemTile implements 
     protected ItemStack foodStack;
     protected Food food;
     protected int recipeId;
-    public BaseCookwareTile() {
-        super();
+    public BaseCookwareTile(String placeableName) {
+        super(placeableName);
     }
 
-    public BaseCookwareTile(int entityId) {
-        super(entityId);
+    public BaseCookwareTile(int entityId, String placeableName) {
+        super(entityId, placeableName);
     }
 
     @Override

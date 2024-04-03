@@ -24,8 +24,7 @@ import java.util.Objects;
  */
 public class Skillet extends BasePlaceableItem implements DefaultItem, Triggerable {
     public Skillet() {
-        super();
-        placeableName = "skillet";
+        super("skillet");
     }
 
     @Override

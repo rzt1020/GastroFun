@@ -34,16 +34,14 @@ import java.util.Objects;
 public class MixingBowlTile extends BaseCookwareTile {
     private Quaternionf rotation;
 
-    private ProgressBar progressBar;
+    private final ProgressBar progressBar;
 
     public MixingBowlTile() {
-        super();
-        placeableName = "mixing_bowl";
+        super("mixing_bowl");
         progressBar = new ProgressBar(entityId + 5);
     }
     public MixingBowlTile(int entityId) {
-        super(entityId);
-        placeableName = "mixing_bowl";
+        super(entityId, "mixing_bowl");
         progressBar = new ProgressBar(entityId + 5);
     }
 
@@ -153,4 +151,5 @@ public class MixingBowlTile extends BaseCookwareTile {
         foodStack = food.getMixing(recipeId);
         return foodStack;
     }
+
 }

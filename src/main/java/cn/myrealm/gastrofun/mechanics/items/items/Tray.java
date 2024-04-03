@@ -3,10 +3,11 @@ package cn.myrealm.gastrofun.mechanics.items.items;
 
 import cn.myrealm.gastrofun.enums.mechanics.DefaultItems;
 import cn.myrealm.gastrofun.enums.systems.NamespacedKeys;
+import cn.myrealm.gastrofun.managers.mechanics.PlaceableItemManager;
 import cn.myrealm.gastrofun.mechanics.items.DefaultItem;
 import cn.myrealm.gastrofun.mechanics.items.Triggerable;
 import cn.myrealm.gastrofun.mechanics.items.tiles.BasePlaceableItemTile;
-import cn.myrealm.gastrofun.mechanics.items.tiles.GrillTile;
+import cn.myrealm.gastrofun.mechanics.items.tiles.TrayTile;
 import cn.myrealm.gastrofun.utils.ItemUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,61 +23,61 @@ import java.util.Objects;
 /**
  * @author rzt1020
  */
-public class Grill extends BasePlaceableItem implements DefaultItem, Triggerable {
-    public Grill() {
-        super("grill");
+public class Tray extends BasePlaceableItem implements DefaultItem, Triggerable {
+    public Tray() {
+        super("tray");
     }
-
-    @Override
-    public ItemStack generate() {
-        ItemStack itemStack = ItemUtil.generateItemStack(Material.RED_DYE, DefaultItems.GRILL.getCustomModelData(), "&6Grill", null);
-
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        assert itemMeta != null;
-        NamespacedKeys.PLACEABLE_NAME.set(itemMeta, PersistentDataType.STRING, DefaultItems.GRILL.getName());
-        itemStack.setItemMeta(itemMeta);
-
-        return itemStack;
-    }
-
     @Override
     public BasePlaceableItemTile createTile() {
-        return new GrillTile();
+        return new TrayTile();
     }
 
     @Override
     public BasePlaceableItemTile createTile(int entityId) {
-        return new GrillTile(entityId);
+        return new TrayTile(entityId);
     }
 
     @Override
     public Location getLocation(Block block, BlockFace blockFace) {
-        if (block.getType().isOccluding()) {
-            return block.getRelative(blockFace).getLocation();
+        block = block.getRelative(blockFace);
+        if (blockFace.equals(BlockFace.UP)) {
+            if (block.getType().equals(Material.WATER) || block.getType().equals(Material.LAVA)) {
+                block = block.getRelative(blockFace);
+            }
         }
         return block.getLocation();
     }
 
     @Override
     public boolean mustAir() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean removable(ItemStack itemStack) {
-        if (Objects.isNull(itemStack)) {
-            return false;
-        }
-        return PICKAXES.contains(itemStack.getType());
+        return true;
     }
 
     @Override
     public boolean canPlacedAt(Location location) {
-        return !location.getBlock().getType().isOccluding() || location.getBlock().getType().equals(Material.WATER) || location.getBlock().getType().equals(Material.LAVA);
+        Block block = location.getBlock().getRelative(BlockFace.DOWN);
+        BasePlaceableItem placeableItem = PlaceableItemManager.getInstance().getPlaceableItem(block.getLocation());
+        if (Objects.nonNull(placeableItem) && DefaultItems.GRILL.getName().equals(placeableItem.getPlaceableName())) {
+            return true;
+        }
+        return block.getType().isOccluding();
+    }
+
+    @Override
+    public ItemStack generate() {
+        return ItemUtil.generateItemStack(Material.RED_DYE, DefaultItems.TRAY.getCustomModelData(), null, null);
     }
 
     @Override
     public boolean trigger(Player player, ItemStack itemStack, Location location) {
+        if (Objects.isNull(itemStack) && !player.getInventory().getItemInMainHand().getType().isAir()) {
+            return false;
+        }
         BasePlaceableItemTile tile = tiles.get(location);
         if (Objects.isNull(tile)) {
             return false;

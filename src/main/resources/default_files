@@ -5,6 +5,8 @@ pack/assets/gastrofun/models/block/grill.json
 pack/assets/gastrofun/models/block/mixing_bowl.json
 pack/assets/gastrofun/models/block/mixing_spoon.json
 pack/assets/gastrofun/models/block/skillet.json
+pack/assets/gastrofun/models/block/tray.json
+pack/assets/gastrofun/textures/block/tray.png
 pack/assets/gastrofun/textures/block/a1.png
 pack/assets/gastrofun/textures/block/a2.png
 pack/assets/gastrofun/textures/block/a3.png

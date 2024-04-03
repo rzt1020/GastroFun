@@ -25,10 +25,10 @@ public abstract class BasePlaceableItem implements Placeable {
             Material.NETHERITE_PICKAXE
     ));
     protected Map<Location , BasePlaceableItemTile> tiles;
-    protected String placeableName;
+    protected final String placeableName;
 
-    public BasePlaceableItem() {
-        placeableName = "";
+    public BasePlaceableItem(String placeableName) {
+        this.placeableName = placeableName;
         tiles = new HashMap<>();
     }
 

@@ -23,11 +23,12 @@ public abstract class BaseSkilletIngredient extends BaseIngredient {
     public void move(List<Player> players, Vector displacement, Location location) {
         updateRandomness();
         displacement = displacement.clone();
-        if (start <= WorldUtil.getWorldTime("world") % 300 && WorldUtil.getWorldTime("world") % 300 < mid) {
+        long worldTime = WorldUtil.getWorldTime("world") % 300;
+        if (start <= worldTime && worldTime < mid) {
             displacement.add(new Vector(0, 0.05, 0));
             currentDisplacement ++;
             sendRotatePacket(players);
-        } else if (mid <= WorldUtil.getWorldTime("world") % 300 && WorldUtil.getWorldTime("world") % 300 < end && currentDisplacement > 0) {
+        } else if (mid <= worldTime && worldTime < end && currentDisplacement > 0) {
             displacement.add(new Vector(0, -0.05, 0));
             currentDisplacement --;
             sendRotatePacket(players);
